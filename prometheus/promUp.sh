@@ -78,7 +78,7 @@ if [ $serviceFound != 0 ]; then
   --publish $GRAFANA_SERVICE_PORT:$GRAFANA_SERVICE_PORT \
   -e "GF_SECURITY_ADMIN_PASSWORD=$GRAFANA_ADMIN_PASSWORD" \
   -e "GF_USERS_ALLOW_SIGN_UP=false" \
-  -e "PROMETHEUS_ENDPOINT=prometheus:9090" \
+  -e "PROMETHEUS_ENDPOINT=http://prometheus:9090" \
   -e "IMPORT_DASHBOARDS=Y" \
   --label com.group="$LABEL_GROUP" \
   --constraint 'node.role == manager' \
