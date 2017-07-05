@@ -113,7 +113,6 @@ if [ $serviceFound != 0 ]; then
     --network $network \
     --publish $PROMETHEUS_SERVICE_PORT:$PROMETHEUS_SERVICE_PORT \
     --label com.group="$LABEL_GROUP" \
-    --mount "type=volume,source=promdata,volume-driver=azurefile,target=/prometheus" \
     --constraint 'node.role == manager' \
     $PROMETHEUS_IMG_NAME:$PROMETHEUS_IMG_TAG
 else
