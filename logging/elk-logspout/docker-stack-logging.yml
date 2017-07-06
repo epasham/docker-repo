@@ -9,6 +9,7 @@ services:
       xpack.monitoring.enabled: 'false'
       xpack.graph.enabled: 'false'
       xpack.watcher.enabled: 'false'
+      LOGSPOUT: 'ignore'
     volumes:
       - esdata:/usr/share/elasticsearch/data
     deploy:
