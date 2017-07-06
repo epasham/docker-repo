@@ -14,8 +14,7 @@ services:
     deploy:
       replicas: 1
       placement:
-        constraints:
-          - node.hostname == agent1
+        constraints: [node.role == manager]
 
   logstash:
     image: docker.elastic.co/logstash/logstash:5.3.2
