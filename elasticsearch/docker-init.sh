@@ -146,7 +146,7 @@ echo "Starting Elasticsearch with the options $OPTS"
 CMD="$ES_HOME/bin/elasticsearch $OPTS"
 if [ `id -u` = 0 ]; then
   echo "Running as non-root..."
-  chown -R $ES_USER /data /conf
+  chown -R $ES_USER /data /logs /conf
   su -c "$CMD" $ES_USER
 else
   $CMD
