@@ -4,10 +4,9 @@ LABEL maintainer "Ekambaram"
 RUN apk -U add bash
 ENV ES_VERSION=5.4.3
 
-ADD https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz /tmp/es.tar.gz
-RUN cd /usr/share && \
-  tar xf /tmp/es.tar.gz && \
-  rm /tmp/es.tar.gz
+ADD https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ES_VERSION}.tar.gz /tmp
+RUN cd /usr/share
+RUN mv /tmp/elasticsearch-${ES_VERSION} .
 
 EXPOSE 9200 9300
 HEALTHCHECK --timeout=5s CMD wget -q -O - http://$HOSTNAME:9200/_cat/health
