@@ -4,9 +4,9 @@ pre_checks() {
   mmc=$(sysctl vm.max_map_count|sed 's/.*= //')
   if [[ $mmc -lt 262144 ]]; then
     echo "
-ERROR: As of 5.0.0 Elasticsearch requires increasing mmap counts.
-Refer to https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
-"
+    ERROR: As of 5.0.0 Elasticsearch requires increasing mmap counts.
+    Refer to https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+    "
     exit 1
   fi
 }
