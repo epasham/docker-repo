@@ -16,7 +16,7 @@ ENV ES_HOME=/usr/share/elasticsearch-${ES_VERSION} \
     ES_JAVA_OPTS="-Xms2g -Xmx2g"
 RUN adduser -S -s /bin/sh $ES_USER
 
-VOLUME ["/data","/conf"]
+VOLUME ["/data","/logs",/conf"]
 WORKDIR $ES_HOME
 COPY java.policy /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/
 COPY docker-init.sh /docker-init.sh
