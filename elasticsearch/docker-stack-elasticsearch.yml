@@ -2,7 +2,7 @@ version: '3'
 
 services:
   master:
-    image: ekambaram/elasticsearch
+    image: ekambaram/elasticsearch:5.4.3
     environment:
       TYPE: MASTER
       UNICAST_HOSTS: master
@@ -12,7 +12,7 @@ services:
       update_config:
         parallelism: 1
   data:
-    image: ekambaram/elasticsearch
+    image: ekambaram/elasticsearch:5.4.3
     environment:
       TYPE: DATA
       UNICAST_HOSTS: master
@@ -22,7 +22,7 @@ services:
         parallelism: 1
         delay: 60s
   client:
-    image: ekambaram/elasticsearch
+    image: ekambaram/elasticsearch:5.4.3
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -35,7 +35,7 @@ services:
         parallelism: 1
         delay: 60s
   kibana:
-    image: kibana
+    image: kibana:5.4.3
     ports:
       - "5601:5601"
     environment:
