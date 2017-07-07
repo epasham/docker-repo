@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  master:
+    image: ekambaram/elasticsearch
+    environment:
+      TYPE: MASTER
+      UNICAST_HOSTS: master
+      MIN_MASTERS: 2
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+  data:
+    image: ekambaram/elasticsearch
+    environment:
+      TYPE: DATA
+      UNICAST_HOSTS: master
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 60s
+  client:
+    image: ekambaram/elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      TYPE: CLIENT
+      UNICAST_HOSTS: master
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 60s
+  kibana:
+    image: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://client:9200
