@@ -97,10 +97,14 @@ setup_personality() {
         
       CLIENT)
         OPTS="$OPTS -E node.master=false -E node.data=false -E node.ingest=true"
-        ;;   
+        ;;
+        
+      MASTER_DATA_CLIENT)
+        OPTS="$OPTS -E node.master=true -E node.data=true -E node.ingest=true"
+        ;;
 
       *)
-        echo "Unknown node type. Please use MASTER|DATA|CLIENT"
+        echo "Unknown node type. Please use MASTER|DATA|CLIENT|MASTER_DATA_CLIENT"
         exit 1
     esac
   fi
