@@ -19,7 +19,8 @@ RUN adduser -S -s /bin/sh $ES_USER
 VOLUME ["/data","/conf"]
 WORKDIR $ES_HOME
 COPY java.policy /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/
-COPY start /start
+COPY docker-init.sh /docker-init.sh
+RUN chmod +x ./docker-init.sh
 COPY log4j2.properties $ES_HOME/config/
 
-CMD ["/start"]
+CMD ["/docker-init.sh"]
