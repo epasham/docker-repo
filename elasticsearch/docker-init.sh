@@ -124,7 +124,7 @@ fi
 OPTS="$OPTS \
   -E path.conf=/conf \
   -E path.data=/data \
-  -E path.logs=/data \
+  -E path.logs=/logs \
   -E transport.tcp.port=9300 \
   -E http.port=9200"
 
@@ -146,8 +146,8 @@ echo "Starting Elasticsearch with the options $OPTS"
 CMD="$ES_HOME/bin/elasticsearch $OPTS"
 if [ `id -u` = 0 ]; then
   echo "Running as non-root..."
-  chown -R $DEFAULT_ES_USER /data /conf
-  su -c "$CMD" $DEFAULT_ES_USER
+  chown -R $ES_USER /data /conf
+  su -c "$CMD" $ES_USER
 else
   $CMD
 fi
