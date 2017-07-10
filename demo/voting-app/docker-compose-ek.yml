@@ -1,0 +1,32 @@
+version: "2"
+
+services:
+  vote:
+    build: ./vote
+    image: ekambaram/votiingui:v1
+    command: python app.py
+    volumes:
+     - ./vote:/app
+    ports:
+      - "5000:80"
+
+  redis:
+    image: redis:alpine
+    ports: ["6379"]
+
+  worker:
+    build: ./worker
+    image: ekambaram/votingworker:v1
+
+  db:
+    image: postgres:9.4
+
+  result:
+    build: ./result
+    image: ekambaram/votingresult:v1
+    command: nodemon --debug server.js
+    volumes:
+      - ./result:/app
+    ports:
+      - "8080:80"
+      - "5858:5858"
