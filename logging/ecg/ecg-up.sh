@@ -2,15 +2,15 @@
 
 docker network create monitoring -d overlay
 
-docker service create --network=monitoring \
+docker service create --network=logging-net \
   --mount type=volume,source=searchdata,target=/usr/share/elasticsearch/data \
   --name elasticsearch elasticsearch:2.4.0
   
-docker service create --network=monitoring \
+docker service create --network=logging-net \
   --name kibana -e ELASTICSEARCH_URL="http://elasticsearch:9200" \
   -p 5601:5601 kibana:4.6.0
   
-docker service create --network=monitoring \
+docker service create --network=logging-net \
   --mode global --name cadvisor \
   --mount type=bind,source=/,target=/rootfs,readonly=true \
   --mount type=bind,source=/var/run,target=/var/run,readonly=false \
@@ -19,4 +19,3 @@ docker service create --network=monitoring \
   google/cadvisor:latest \
   -storage_driver=elasticsearch \
   -storage_driver_es_host="http://elasticsearch:9200"
-
