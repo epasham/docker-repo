@@ -35,13 +35,42 @@ else
   sleep 4s
 fi
 
-docker service create --network=logging-net \
-  --mount type=volume,source=searchdata,target=/usr/share/elasticsearch/data \
-  --name elasticsearch elasticsearch:2.4.0
+################################################################################################
+#Create Elasticsearch
+################################################################################################
+docker service ls --filter label=com.group=$LABEL_GROUP |grep $ES_SERVICE_NAME
+serviceFound=$?
+if [ $serviceFound != 0 ]; then
+  echo "Creating the $ES_SERVICE_NAME service..."
+  docker service create \
+    --name $ES_SERVICE_NAME \
+    --network $network \
+    --label com.group="$LABEL_GROUP" \
+    --constraint 'node.role == manager' \
+	--mount type=volume,source=searchdata,target=/usr/share/elasticsearch/data \
+    $ES_IMG_NAME:$ES_IMG_TAG
+else
+  echo "[ SERVICE IS ALREADY RUNNING ] $ES_SERVICE_NAME"
+fi
   
-docker service create --network=logging-net \
-  --name kibana -e ELASTICSEARCH_URL="http://elasticsearch:9200" \
-  -p 5601:5601 kibana:4.6.0
+################################################################################################  
+#Create Kibana
+################################################################################################  
+# Spin up official Kibana Docker image
+docker service ls --filter label=com.group=$LABEL_GROUP |grep $KIBANA_SERVICE_NAME
+serviceFound=$?
+if [ $serviceFound != 0 ]; then
+  echo "Creating the $KIBANA_SERVICE_NAME service..." 
+  docker service create \
+  --name $KIBANA_SERVICE_NAME \
+  --network $network \
+  --publish $KIBANA_SERVICE_PORT:$KIBANA_SERVICE_PORT \
+  -e "ELASTICSEARCH_URL=http://elasticsearch:9200" \
+  --label com.group="$LABEL_GROUP" \
+  $KIBANA_IMG_NAME:$KIBANA_IMG_TAG
+else
+  echo "[ SERVICE IS ALREADY RUNNING ] $KIBANA_SERVICE_NAME"
+fi
 
 
 ################################################################################################
