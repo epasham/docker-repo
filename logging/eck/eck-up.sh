@@ -2,7 +2,7 @@
 
 ################################################################################################
 #                       Monitoring Solution with Prometheus Stack
-# 										                  cAdvisor
+#                                       cAdvisor
 #                                       Elasticsearch
 #                                       Kibana
 ################################################################################################
@@ -47,7 +47,7 @@ if [ $serviceFound != 0 ]; then
     --network $network \
     --label com.group="$LABEL_GROUP" \
     --constraint 'node.role == manager' \
-	--mount type=volume,source=searchdata,target=/usr/share/elasticsearch/data \
+    --mount type=volume,source=searchdata,target=/usr/share/elasticsearch/data \
     $ES_IMG_NAME:$ES_IMG_TAG
 else
   echo "[ SERVICE IS ALREADY RUNNING ] $ES_SERVICE_NAME"
