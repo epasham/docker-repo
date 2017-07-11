@@ -1,4 +1,7 @@
-create cadvisor index pattern
+Create docker volume to store elasticsearch data. setup the volume on manager
+docker volume create -d local --name searchdata
+
+Create cadvisor index pattern
 
 1. Go to Kibana web page
 2. click discover tab
