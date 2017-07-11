@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker network create monitoring -d overlay
+docker network create logging-net -d overlay
 
 docker service create --network=logging-net \
   --mount type=volume,source=searchdata,target=/usr/share/elasticsearch/data \
