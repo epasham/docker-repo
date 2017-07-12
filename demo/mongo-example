@@ -1,0 +1,38 @@
+version: '3'
+services:
+  talk:
+    image: coralproject/talk:latest
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      - TALK_MONGO_URL=mongodb://mongo/talk
+      - TALK_REDIS_URL=redis://redis
+      - TALK_JWT_SECRET=foobar
+      - "TALK_PLUGINS_JSON={}"
+  mongo:
+    image: mongo:3.2
+    restart: always
+    volumes:
+      - mongo:/data/db
+  mexpress:
+        image: mongo-express
+        depends_on:
+            - "mongo"
+        ports:
+            - "8081:8081"
+        environment:
+            ME_CONFIG_OPTIONS_EDITORTHEME: ambiance
+  redis:
+    image: redis:3.2
+    restart: always
+    volumes:
+      - redis:/data
+volumes:
+  mongo:
+    external: false
+  redis:
+    external: false
