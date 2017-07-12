@@ -4,7 +4,7 @@ services:
     redis:
         image: redis
     web:
-        image: ekambaram/redmon:2.2.2
+        image: transcranial/redmon
         command: redmon -r redis://redis
         ports:
             - "4567:4567"
