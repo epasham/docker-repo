@@ -1,0 +1,16 @@
+FROM debian:jessie
+
+RUN apt-get update -qq
+RUN apt-get install ruby ruby-dev build-essential --no-install-recommends -qqy
+
+ENV REDMON_VERSION=2.6.10
+
+ADD https://rubygems.org/rubygems/rubygems-${REDMON_VERSION}.tgz /
+
+RUN cd /rubygems-${REDMON_VERSION} && ruby setup.rb
+
+RUN gem install redmon
+
+EXPOSE 4567
+
+ENTRYPOINT ["redmon"]
