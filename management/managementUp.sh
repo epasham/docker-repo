@@ -3,7 +3,7 @@ docker service create \
   --name portainer \
   --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  portainer/portainer:linux-386-1.13.3 
+  portainer/portainer:linux-386-1.13.4 
 
 docker service create \
   --publish=8000:8080 \
