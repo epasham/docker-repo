@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ################################################################################################
-#                       Monitoring Solution with Prometheus Stack
+#                       Logging Solution with ECK Stack
 #                                       cAdvisor
 #                                       Elasticsearch
 #                                       Kibana
