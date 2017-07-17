@@ -58,7 +58,7 @@ fi
 #Create Elasticsearch
 ################################################################################################
 # Spin up official Elasticsearch Docker image
-docker service ls --filter label=com.group=$LABEL_GROUP |grep $NODE_EXPORTER_SERVICE
+docker service ls --filter label=com.group=$LABEL_GROUP |grep $ES_SERVICE_NAME
 serviceFound=$?
 if [ $serviceFound != 0 ]; then
   echo "Creating the $ES_SERVICE_NAME service..."
