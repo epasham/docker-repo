@@ -5,8 +5,8 @@ On Linux, you can increase the limits by running the following command as root:
 To set this value permanently, update the vm.max_map_count setting in /etc/sysctl.conf. To verify after rebooting, run sysctl vm.max_map_count
 
 
-# Follow the below steps before launching the loggingUp.sh script
-
+Follow the below steps before launching the loggingUp.sh script
+------------------------------------------------------------------
 1. create docker volume esdata to be used for storing elasticsearch data
 docker volume create -d local --name esdata
 
