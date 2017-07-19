@@ -28,7 +28,7 @@ services:
         target: /usr/share/logstash/pipeline/logstash.conf
 
   logspout:
-    image: ekambaram/logspout-logstash:v1
+    image: ekambaram/logspout-logstash:v2
     environment:
       ROUTE_URIS: 'logstash://logstash:5000'
     volumes:
