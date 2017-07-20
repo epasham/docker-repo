@@ -4,6 +4,8 @@ services:
   registry:
     image: registry:latest
     deploy:
+      placement:
+        constraints: [node.hostname == manager1]
       replicas: 1
       restart_policy:
         condition: on-failure
