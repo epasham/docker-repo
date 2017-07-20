@@ -28,4 +28,4 @@ services:
       - 8090:8080
     environment:
       - REGISTRY_URL=http://registry:5000/v2
-      - REGISTRY_NAME=registry.dev:5000
+      - REGISTRY_NAME=localhost:5000
