@@ -145,6 +145,7 @@ if [ $serviceFound != 0 ]; then
     --label docker.ns=${ns} \
     --container-label docker.stack=${STACK} \
     -e SYSLOG_FORMAT=rfc3164 \
+    -e SYSLOG_HOSTNAME=${hostname} \
     --mount "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock" \
     ${LOGSPOUT_IMG_NAME}:${LOGSPOUT_IMG_TAG} syslog://${LOGSTASH_SERVICE_NAME}:51415
 else
