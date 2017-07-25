@@ -1,11 +1,11 @@
 #!/bin/bash
 
 ################################################################################################
-#                       Monitoring Solution with Prometheus Stack
-# 										NodeExporter
-# 										cAdvisor
-#                                       Prometheus
-#                                       Grafana
+#                       Centralized Logging Solution with ELK Stack
+#                            		Elasticsearch
+# 					Logspout
+#                                       Logstash
+#                                       Kibana
 ################################################################################################
 
 function wait_for_service {
