@@ -70,15 +70,15 @@ if [ $serviceFound != 0 ]; then
     --name ${ES_SERVICE_NAME} \
     --network ${network} \
     --constraint 'node.role == manager' \
-	-e "ES_JAVA_OPTS=-Xms256m -Xmx256m" \
+    -e "ES_JAVA_OPTS=-Xms256m -Xmx256m" \
     -e "xpack.security.enabled=false" \
     -e "xpack.monitoring.enabled=false" \
     -e "xpack.graph.enabled=false" \
     -e "xpack.watcher.enabled=false" \
     -e "LOGSPOUT=ignore" \
-	--publish ${ES_SERVICE_PORT}:${ES_SERVICE_PORT} \
-	--label docker.ns=${ns} \
-	--container-label docker.stack=${STACK} \
+    --publish ${ES_SERVICE_PORT}:${ES_SERVICE_PORT} \
+    --label docker.ns=${ns} \
+    --container-label docker.stack=${STACK} \
     ${ES_IMG_NAME}:${ES_IMG_TAG}
 else
   echo "[ SERVICE IS ALREADY RUNNING ] $ES_SERVICE_NAME"
@@ -97,9 +97,9 @@ if [ $serviceFound != 0 ]; then
   docker service create \
     --name ${LOGSTASH_SERVICE_NAME} \
     --network ${network} \
-	-e LOGSPOUT=ignore \
+    -e LOGSPOUT=ignore \
     --label docker.ns=${ns} \
-	--container-label docker.stack=${STACK} \
+    --container-label docker.stack=${STACK} \
     --mount type=bind,source=/logstash/logstash.conf,target=/usr/share/logstash/pipeline/logstash.conf \
     ${LOGSTASH_IMG_NAME}:${LOGSTASH_IMG_TAG}
 else
@@ -144,7 +144,7 @@ if [ $serviceFound != 0 ]; then
     --mode global \
     --label docker.ns=${ns} \
     --container-label docker.stack=${STACK} \
-	-e SYSLOG_FORMAT=rfc3164 \
+    -e SYSLOG_FORMAT=rfc3164 \
     --mount "type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock" \
     ${LOGSPOUT_IMG_NAME}:${LOGSPOUT_IMG_TAG} syslog://${LOGSTASH_SERVICE_NAME}:51415
 else
