@@ -9,7 +9,6 @@ services:
       xpack.monitoring.enabled: 'false'
       xpack.graph.enabled: 'false'
       xpack.watcher.enabled: 'false'
-      LOGSPOUT: 'ignore'
     volumes:
       - esdata:/usr/share/elasticsearch/data
     deploy:
@@ -19,6 +18,8 @@ services:
 
   logstash:
     image: docker.elastic.co/logstash/logstash:5.4.2
+    ports:
+      - '12201:12201/udp'
     depends_on:
       - elasticsearch
     deploy:
@@ -26,22 +27,6 @@ services:
     configs:
       - source: logstash_config
         target: /usr/share/logstash/pipeline/logstash.conf
-
-  logspout:
-    image: ekambaram/logspout-logstash:v2
-    environment:
-      ROUTE_URIS: 'logstash://logstash:5000'
-      DOCKER_LABELS: 1
-      LOGSTASH_FIELDS: 'logs.source=docker,logs.from=abc'
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    depends_on:
-      - logstash
-    deploy:
-      mode: global
-      restart_policy:
-        condition: on-failure
-        delay: 30s
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.4.2
