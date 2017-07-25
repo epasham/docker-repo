@@ -40,7 +40,7 @@ LOGSPOUT_IMG_NAME="gliderlabs/logspout"
 LOGSPOUT_IMG_TAG=latest
 LOGSPOUT_SERVICE_NAME=logspout
 
-KIBANA_IMG_NAME=kibana
+KIBANA_IMG_NAME="docker.elastic.co/kibana/kibana"
 KIBANA_IMG_TAG=5.4.2
 KIBANA_SERVICE_NAME=kibana
 KIBANA_SERVICE_PORT=5601
