@@ -29,7 +29,7 @@ services:
   cadvisor:
     image: google/cadvisor
     hostname: '{{.Node}}'
-    command: -logtostderr -docker_only -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host=influxdb:8086
+    command: -logtostderr -docker_only -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host=influx:8086
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
