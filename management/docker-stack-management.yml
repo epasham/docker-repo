@@ -14,7 +14,7 @@ services:
 
 
   visualizer:
-    image: dockersamples/visualizer
+    image: dockersamples/visualizer:stable
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
