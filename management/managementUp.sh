@@ -11,4 +11,4 @@ docker service create \
   --name visualizer \
   --constraint=node.role==manager \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  dockersamples/visualizer
+  dockersamples/visualizer:stable
