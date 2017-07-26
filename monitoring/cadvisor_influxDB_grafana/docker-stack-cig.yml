@@ -3,6 +3,8 @@ version: '3'
 services:
   influx:
     image: influxdb
+    ports:
+      - 8083:8083    
     volumes:
       - influxdbdata:/var/lib/influxdb
     deploy:
