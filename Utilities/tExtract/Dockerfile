@@ -13,14 +13,10 @@ RUN add-apt-repository ppa:jon-severinsson/ffmpeg \
    && RUN apt-get update
 
 # Install all dependencies as needed by textract. 
-# See http://textract.readthedocs.org/en/latest/installation.html
-RUN apt-get install python-dev libxml2-dev libxslt1-dev antiword unrtf poppler-utils pstotext tesseract-ocr \
-flac ffmpeg lame libmad0 libsox-fmt-mp3 sox libjpeg-dev swig libpulse-dev
-
 # Install zlibg1-dev as it is needed on docker instances.
-# See note at http://textract.readthedocs.org/en/latest/installation.html 
-# To avoid the issue reported in https://github.com/deanmalmgren/textract/pull/19 for docker
-RUN apt-get install zlib1g-dev
+# See http://textract.readthedocs.org/en/latest/installation.html. check note as well
+RUN apt-get install python-dev libxml2-dev libxslt1-dev antiword unrtf poppler-utils pstotext tesseract-ocr \
+flac ffmpeg lame libmad0 libsox-fmt-mp3 sox libjpeg-dev swig libpulse-dev zlib1g-dev
 
 # Install textract using pip
 RUN pip install textract
