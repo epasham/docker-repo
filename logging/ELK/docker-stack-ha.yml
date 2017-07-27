@@ -50,6 +50,9 @@ services:
     deploy:
       mode: replicated
       replicas: 2
+    configs:
+      - source: logstash_config
+        target: /usr/share/logstash/pipeline/logstash.conf
 
 networks:
   elk:
