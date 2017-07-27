@@ -37,7 +37,7 @@ LOGSPOUT_IMG_NAME="ekambaram/logspout-logstash"
 LOGSPOUT_IMG_TAG="v1"
 LOGSPOUT_SERVICE_NAME="logspout"
 
-KIBANA_IMG_NAME="kibana"
+KIBANA_IMG_NAME="docker.elastic.co/kibana/kibana"
 KIBANA_IMG_TAG="5.4.2"
 KIBANA_SERVICE_NAME="kibana"
 KIBANA_SERVICE_PORT="5601"
