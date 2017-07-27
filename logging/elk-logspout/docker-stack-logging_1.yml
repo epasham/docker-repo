@@ -1,0 +1,58 @@
+version: '3.3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.2
+    environment:
+      ES_JAVA_OPTS: '-Xms256m -Xmx256m'
+      xpack.security.enabled: 'false'
+      xpack.monitoring.enabled: 'false'
+      xpack.graph.enabled: 'false'
+      xpack.watcher.enabled: 'false'
+      LOGSPOUT: 'ignore'
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+  logstash:
+    image: ekambaram/logging-logstash:v1
+    depends_on:
+      - elasticsearch
+    deploy:
+      replicas: 1
+
+  logspout:
+    image: ekambaram/logspout-logstash:v2
+    environment:
+      ROUTE_URIS: 'logstash://logstash:5000'
+      DOCKER_LABELS: 1
+      LOGSTASH_FIELDS: 'logs.source=docker,logs.from=abc'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - logstash
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.4.2
+    ports:
+      - '5601:5601'
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_URL: 'http://elasticsearch:9200'
+      XPACK_SECURITY_ENABLED: 'false'
+      XPACK_MONITORING_ENABLED: 'false'
+    deploy:
+      replicas: 1
+
+volumes:
+  esdata:
+    driver: local
