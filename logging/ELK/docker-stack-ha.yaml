@@ -22,7 +22,7 @@ services:
       test: curl -s http://localhost:9200/_cluster/health?local=true | grep 'green'
       interval: 30s
       retries: 3
-	  
+      
   kibana:
     image: kibana:5.5.0
     ports:
