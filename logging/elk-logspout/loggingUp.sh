@@ -68,7 +68,7 @@ if [ $serviceFound != 0 ]; then
     --label com.group="$LABEL_GROUP" \
     --constraint 'node.role == manager' \
     -e "LOGSPOUT=ignore" \
-    -e "ES_JAVA_OPTS=-Xms256m -Xmx256m" \
+    -e "ES_JAVA_OPTS=-Xms1g -Xmx1g" \
     -e "xpack.security.enabled=false" \
     -e "xpack.monitoring.enabled=false" \
     -e "xpack.graph.enabled=false" \
