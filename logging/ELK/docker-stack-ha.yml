@@ -18,8 +18,6 @@ services:
       mode: replicated
       replicas: 1
       endpoint_mode: dnsrr
-      placement:
-        constraints: [node.role == manager]
     healthcheck:
       test: curl -s http://localhost:9200/_cluster/health?local=true | grep 'green'
       interval: 30s
