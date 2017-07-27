@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:trusty
 
 # Set this environment variable to avoid warnings 'debconf: unable to initialize frontend: dialog'
 ENV DEBIAN_FRONTEND noninteractive
