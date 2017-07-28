@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:xenial
 
 # Set this environment variable to avoid warnings 'debconf: unable to initialize frontend: dialog'
 ENV DEBIAN_FRONTEND noninteractive
@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     
 # Add 3rd party PPA for ffmpeg package (ffmpeg is used by textract)
 # Run update again to get new packages that we described in the new PPA
-RUN add-apt-repository ppa:djcj/hybrid \
+RUN add-apt-repository ppa:jonathonf/ffmpeg-3 \
    && apt-get update && apt-get dist-upgrade
 
 # Install all dependencies as needed by textract. 
