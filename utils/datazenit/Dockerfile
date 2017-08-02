@@ -1,4 +1,4 @@
-FROM java:8u111-jdk-alpine
+FROM java:8
 LABEL Description="Datazenit is a modern web-based database administration tool for MySQL and PostgreSQL"
 
 ENV DATAZENIT_VERSION 1.1.0
