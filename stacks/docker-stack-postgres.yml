@@ -11,3 +11,10 @@ services:
         - postgres
     ports:
       - '8081:8081'
+ 
+  dbadmin:
+    image: ekambaram/datazenit:1.1.0
+    depends_on: 
+        - postgres
+    ports:
+      - '8082:8080'
