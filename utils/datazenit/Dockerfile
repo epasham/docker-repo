@@ -8,8 +8,5 @@ RUN curl -L -o datazenit.tgz https://datazenit.com/store/download/server/linux \
     && mv datazenit-${DATAZENIT_VERSION} /usr/src/datazenit \
     && chmod +x /usr/src/datazenit/bin/datazenit
 
-WORKDIR /usr/src/datazenit/
-
-EXPOSE 8080
-
+EXPOSE 9000
 CMD ["/usr/src/datazenit/bin/datazenit"]
