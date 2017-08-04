@@ -1,0 +1,81 @@
+version: '3'
+ 
+services:
+  lb:
+    image: traefik
+    command: --docker \
+      --docker.swarmmode \
+      --docker.watch \
+      --web \
+      --loglevel=DEBUG
+    ports:
+      - 80:80
+      - 9090:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      restart_policy:
+        condition: any
+      mode: replicated
+      replicas: 1
+      update_config:
+        delay: 2s
+      placement:
+         constraints: [node.role == manager]
+    networks:
+      - wordpress-net
+      
+  mysqldb:
+    image: mysql:5.7
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - wordpress-net
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+  wordpress:
+    depends_on:
+      - mysqldb
+    image: wordpress:latest
+    deploy:
+      mode: replicated
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      placement:
+        constraints: [node.role == worker]
+      update_config:
+        delay: 2s
+      labels:
+        - "traefik.docker.network=wordpress-net"
+        - "traefik.port=80"
+        - "traefik.frontend.rule=PathPrefix:/"
+        - "traefik.backend.loadbalancer.sticky=true"
+    volumes:
+      - wordpressdata:/var/www/html
+    networks:
+      - wordpress-net
+    ports:
+      - "80"
+    environment:
+      WORDPRESS_DB_HOST: mysqldb:3306
+      WORDPRESS_DB_PASSWORD: wordpress
+
+volumes:
+ dbdata:
+ wordpressdata:
+  
+networks:
+  wordpress-net:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
