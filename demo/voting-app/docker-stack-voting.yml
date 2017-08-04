@@ -22,7 +22,7 @@ services:
         constraints: [node.role == manager]
 
   vote:
-    image: ekambaram/votiingui:v1
+    image: ekambaram/votingui:v1
     command: python app.py
     ports:
       - 5000:80
