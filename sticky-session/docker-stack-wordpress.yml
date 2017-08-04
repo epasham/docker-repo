@@ -1,0 +1,26 @@
+version: '3'
+ 
+services:
+  db:
+    image: mysql:5.7
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - wordpress-net
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      
+volumes:
+ dbdata:
+  
+networks:
+  wordpress-net:
+    external: true 
