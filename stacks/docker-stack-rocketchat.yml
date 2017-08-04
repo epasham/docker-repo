@@ -11,8 +11,6 @@ services:
       - PORT=3000
       - ROOT_URL=http://localhost:3000
       - MONGO_URL=mongodb://mongo:27017/rocketchat
-    links:
-      - mongo:mongo
     ports:
       - 3000:3000
   
