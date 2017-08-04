@@ -13,4 +13,11 @@ services:
       - MONGO_URL=mongodb://mongo:27017/rocketchat
     ports:
       - 3000:3000
+    deploy:
+      restart_policy:
+        condition: any
+      mode: replicated
+      replicas: 1
+      update_config:
+        delay: 2
   
