@@ -18,8 +18,28 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
       
+  wordpress:
+    depends_on:
+      - mysqldb
+    image: wordpress:latest
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    volumes:
+      - wordpressdata:/var/www/html
+    networks:
+      - wordpress-net
+    ports:
+      - "8001:80"
+    environment:
+      WORDPRESS_DB_HOST: mysqldb:3306
+      WORDPRESS_DB_PASSWORD: wordpress    
+      
 volumes:
  dbdata:
+ wordpressdata:
   
 networks:
   wordpress-net:
