@@ -76,6 +76,4 @@ volumes:
   
 networks:
   wordpress-net:
-    driver: overlay
-    driver_opts:
-      encrypted: "true"
+    external: true
