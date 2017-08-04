@@ -1,7 +1,7 @@
 version: '3'
  
 services:
-  loadbalancer:
+  lb:
     image: traefik
     command: --docker \
       --docker.swarmmode \
