@@ -19,5 +19,5 @@ services:
       mode: replicated
       replicas: 1
       update_config:
-        delay: 2
+        delay: 2s
   
