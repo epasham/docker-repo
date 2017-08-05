@@ -1,14 +1,13 @@
-FROM jenkins:alpine
+FROM jenkins:2.7.1
 
 USER root
-# install sudo and curl
-RUN apk add --update bash \
-      && apk add sudo \
-      && rm -rf /var/cache/apk/*
+RUN apt-get update \
+      && apt-get install -y sudo curl\
+      && rm -rf /var/lib/apt/lists/*
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 USER jenkins
-
+# installing specific list of plugins. see: https://github.com/jenkinsci/docker#preinstalling-plugins
 COPY plugins.txt /var/jenkins_home/plugins.txt
 RUN /usr/local/bin/plugins.sh /var/jenkins_home/plugins.txt
 
