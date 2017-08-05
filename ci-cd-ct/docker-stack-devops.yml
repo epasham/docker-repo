@@ -27,4 +27,5 @@ services:
     - devops-net
         
 networks:
-    devops-net:    
+    devops-net:
+      driver: overlay
