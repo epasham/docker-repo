@@ -1,54 +1,47 @@
 #
 # Creates a docker container with Nexus Artifact Repository
 #
-FROM centos:7
+FROM centos:6
 
-ENV SONATYPE_WORK /sonatype-work
-ENV NEXUS_VERSION 2.14.1-01
-ENV NEXUS_HOME /opt/sonatype/nexus/
-
-RUN INSTALL_PKGS="java-1.8.0-openjdk.x86_64" && \
-    yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
-    yum clean all  && \
-    localedef -f UTF-8 -i en_US en_US.UTF-8
-
-# Install packages necessary
-RUN yum -y install unzip && yum clean all
-
-ADD https://download.sonatype.com/nexus/oss/nexus-${NEXUS_VERSION}-bundle.zip nexus-${NEXUS_VERSION}-bundle.zip
-
-# Extract Nexus
-RUN set -x \
-	&& unzip nexus-${NEXUS_VERSION}-bundle.zip \
-  && mkdir -p ${NEXUS_HOME} \
-	&& cp -r nexus-${NEXUS_VERSION}/* ${NEXUS_HOME} \
-	&& rm -rf nexus-${NEXUS_VERSION}-bundle.tar.gz \
-  && rm -rf nexus-${NEXUS_VERSION}
-
-RUN groupadd -r nexus -g 3001 && \
-    useradd -u 3001 -r -g nexus -m -d ${SONATYPE_WORK} -s /bin/bash -c "Nexus Run User" nexus
-
-VOLUME ${SONATYPE_WORK}
-
-EXPOSE 8081
-EXPOSE 5555
-
-WORKDIR /opt/sonatype/nexus
-
-RUN INSTALL_PKGS="createrepo" && \
-    yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
+USER root
+# Update the system
+RUN yum -y update; \
     yum clean all
 
-ENV CONTEXT_PATH /
-ENV MAX_HEAP 768m
-ENV MIN_HEAP 256m
-ENV JAVA_OPTS -server -XX:MaxPermSize=192m -Djava.net.preferIPv4Stack=true
-ENV LAUNCHER_CONF ./conf/jetty.xml ./conf/jetty-requestlog.xml
-CMD java \
-  -Dnexus-work=${SONATYPE_WORK} -Dnexus-webapp-context-path=${CONTEXT_PATH} \
-  -Xms${MIN_HEAP} -Xmx${MAX_HEAP} \
-  -cp 'conf/:lib/*' \
-  ${JAVA_OPTS} \
-  org.sonatype.nexus.bootstrap.Launcher ${LAUNCHER_CONF}
+##########################################################
+# Install Java JDK, SSH and other useful cmdline utilities
+##########################################################
+RUN yum -y install java-1.7.0-openjdk-devel \
+    which \
+    telnet \
+    unzip \
+    openssh-server \
+    sudo \
+    openssh-clients \
+    iputils \
+    iproute \
+    httpd-tools \
+    wget \
+    tar; \
+    yum clean all
+ENV JAVA_HOME /usr/lib/jvm/jre
+
+##########################################################
+# Install Nexus
+##########################################################
+RUN mkdir -p /opt/sonatype-nexus /opt/sonatype-work
+RUN wget -O /tmp/nexus-latest-bundle.tar.gz http://www.sonatype.org/downloads/nexus-latest-bundle.tar.gz
+RUN tar xzvf /tmp/nexus-latest-bundle.tar.gz -C /opt/sonatype-nexus --strip-components=1
+RUN useradd --user-group --system --home-dir /opt/sonatype-nexus nexus
+
+ADD nexus.xml /opt/sonatype-work/nexus/conf/nexus.xml
+
+RUN chown -R nexus:nexus /opt/sonatype-work /opt/sonatype-nexus
+
+ENV NEXUS_WEBAPP_CONTEXT_PATH /nexus
+RUN echo "#!/bin/bash" > /opt/start-nexus.sh
+RUN echo "su -c \"/opt/sonatype-nexus/bin/nexus console\" - nexus" >> /opt/start-nexus.sh
+RUN chmod +x /opt/start-nexus.sh
+
+CMD ["/opt/start-nexus.sh"]
+EXPOSE 8081
