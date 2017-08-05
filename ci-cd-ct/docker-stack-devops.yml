@@ -2,14 +2,14 @@ version: '3'
 
 services:
   seleniumhub:
-  image: selenium/hub:3.4
+  image: selenium/hub:3.4.0
   ports:
     - 4444:4444
   networks:
     - devops-net
     
   firefox:
-  image: selenium/node-firefox:3.4
+  image: selenium/node-firefox:3.4.0
   depends_on:
     - seleniumhub
   environment:
@@ -18,7 +18,7 @@ services:
     - devops-net
     
  chrome:
-  image: selenium/node-chrome:3.4
+  image: selenium/node-chrome:3.4.0
   depends_on:
     - seleniumhub
   environment:
