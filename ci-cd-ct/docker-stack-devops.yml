@@ -73,3 +73,5 @@ networks:
 volumes:
   jenkinsdata:
     driver: local
+  sonardata:
+    driver: local
