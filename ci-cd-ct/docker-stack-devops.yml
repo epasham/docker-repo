@@ -69,3 +69,7 @@ services:
 networks:
     devops-net:
       driver: overlay
+      
+volumes:
+  jenkinsdata:
+    driver: local
