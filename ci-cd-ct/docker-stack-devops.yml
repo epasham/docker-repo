@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jenkins:
-    image:ekambaram/jenkins:2.7.1
+    image: ekambaram/jenkins:2.7.1
     ports:
       - 18080:8080
     networks:
