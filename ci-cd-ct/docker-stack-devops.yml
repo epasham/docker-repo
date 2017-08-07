@@ -1,10 +1,23 @@
 version: '3'
 
 services:
-  nexus:ekambaram/nexus:2.14.5
-  ports:
-    - 18081:8081
-    
+  jenkins:
+    image:ekambaram/jenkins:2.7.1
+    ports:
+      - 18080:8080
+    networks:
+      - devops-net
+    volumes:
+      - jenkinsdata:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  nexus:
+    image: ekambaram/nexus:2.14.5
+    ports:
+      - 18081:8081
+    networks:
+      - devops-net
+      
   sonar:
     image: ekambaram/sonarqube:5.6.3
     ports:
