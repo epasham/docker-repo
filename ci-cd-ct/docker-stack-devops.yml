@@ -56,8 +56,8 @@ services:
     - HUB_PORT_4444_TCP_ADDR=seleniumhub
   networks:
     - devops-net
-    
- chrome:
+  
+  chrome:
   image: selenium/node-chrome:3.4.0
   depends_on:
     - seleniumhub
