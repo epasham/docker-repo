@@ -2,7 +2,7 @@ FROM jenkinsci/jenkins:2.73
 
 ENV JENKINS_USER jenkins
 ENV JENKINS_PASSWORD jenkins
-ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false -DhttpListenAddress=127.0.0.1
+ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 
 # Install plugins
 COPY plugins.txt /var/jenkins_home/plugins.txt
