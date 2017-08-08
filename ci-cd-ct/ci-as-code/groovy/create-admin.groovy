@@ -5,8 +5,9 @@ import hudson.security.*
 
 def env = System.getenv()
 def jenkins = Jenkins.getInstance()
+
   
-println "--> creating local user 'admin'"
+println "--> creating user"
 
 jenkins.setSecurityRealm(new HudsonPrivateSecurityRealm(false))
 jenkins.setAuthorizationStrategy(new GlobalMatrixAuthorizationStrategy())
