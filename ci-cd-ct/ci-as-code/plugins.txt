@@ -21,6 +21,12 @@ junit:1.20
 mailer:1.19
 matrix-project:1.7.1
 matrix-auth:1.4
+workflow-step-api:2.9
+workflow-api:2.12
+workflow-support:2.13
+workflow-scm-step:2.4
+workflow-cps:2.29
+workflow-job:2.10
 workflow-cps-global-lib:2.5
 branch-api:2.0.8
 workflow-multibranch:2.14
