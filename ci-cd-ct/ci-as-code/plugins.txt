@@ -1,10 +1,3 @@
-findbugs:4.65
-checkstyle:3.46
-pmd:3.45
-junit:1.20
-credentials:2.1.13
-build-pipeline-plugin:1.5.4
-sonar:2.5
-cucumber-reports:3.5.0
-notification:1.11
-job-dsl:1.58
+structs:1.6
+script-security:1.25
+job-dsl:1.64
