@@ -4,6 +4,5 @@ job-dsl:1.64
 credentials:2.1.14
 cloudbees-credentials:3.3
 ssh-credentials:1.13
-config-file-provider:2.26.2
 token-macro:2.0
 managed-scripts:1.3
