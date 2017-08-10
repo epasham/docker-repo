@@ -5,7 +5,7 @@ WORKDIR /app
 RUN git clone ${url}
 
 # Stage-2
-FROM maven:3.2-jdk-8 as build
+FROM maven:3.5-jdk-8-alpine as build
 ARG project 
 WORKDIR /app
 COPY --from=clone /app/${project} /app
