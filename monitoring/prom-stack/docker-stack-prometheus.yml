@@ -2,11 +2,11 @@ version: "3"
 
 services:
   cadvisor:
-    image: google/cadvisor:${CADVISOR_VERSION:-v0.25.0}
+    image: google/cadvisor:${CADVISOR_VERSION:-v0.26.1}
     networks:
       - prom-net
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock,readonly
+      - /var/run/docker.sock:/var/run/docker.sock
       - /:/rootfs
       - /var/run:/var/run
       - /sys:/sys
