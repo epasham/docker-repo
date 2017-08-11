@@ -13,13 +13,6 @@ services:
       - /var/lib/docker/:/var/lib/docker
     deploy:
       mode: global
-      resources:
-        limits:
-          cpus: '0.10'
-          memory: 128M
-        reservations:
-	  cpus: '0.10'
-	  memory: 64M
 	  
    node-exporter:${NODE_EXPORTER_VERSION:-latest}
     image: prom/node-exporter
