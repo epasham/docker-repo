@@ -2,7 +2,7 @@ version: "3"
 
 services:
   cadvisor:
-    image: google/cadvisor:${CADVISOR_VERSION:-v0.25.0}
+    image: google/cadvisor:v0.25.0
     networks:
       - prom-net
     volumes:
@@ -22,7 +22,7 @@ services:
           memory: 64M
 		  
    node-exporter:
-    image: prom/node-exporter:${NODE_EXPORTER_VERSION:-latest}
+    image: prom/node-exporter
     networks:
       - prom-net
     volumes:
@@ -41,7 +41,7 @@ services:
           memory: 16M
           
   prometheus:
-    image: ekambaram/prom:${PROMETHEUS_SWARM_VERSION:-1.7.1}
+    image: ekambaram/prom:1.7.1
     ports:
       - 9090:9090
     networks:
@@ -58,7 +58,7 @@ services:
           memory: 128M  
 
   grafana:
-    image: ekambaram/grafana:${GRAFANA_VERSION:-v2}
+    image: ekambaram/grafana:v2
     ports:
       - 3000:3000
     networks:
