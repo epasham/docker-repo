@@ -2,7 +2,7 @@ version: "3"
 
 services:
   cadvisor:
-    image: google/cadvisor:v0.25.0
+    image: google/cadvisor:v0.26.1
     networks:
       - prom-net
     volumes:
