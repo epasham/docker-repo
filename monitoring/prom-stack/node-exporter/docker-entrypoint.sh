@@ -8,5 +8,5 @@ else
   echo "host{host=\"$host_hostname\"} 1" > /etc/node-exporter/host_hostname.prom
 fi
 
-set -- $NODE_EXPORTER_BIN "$@"
+set -- $NODE_EXPORTER_BIN_PATH "$@"
 exec "$@"
