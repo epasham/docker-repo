@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  cadvisor:
+    image: google/cadvisor:${CADVISOR_VERSION:-v0.25.0}
+    networks:
+      - prom-net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock,readonly
+      - /:/rootfs
+      - /var/run:/var/run
+      - /sys:/sys
+      - /var/lib/docker/:/var/lib/docker
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 128M
+        reservations:
+          cpus: '0.10'
+          memory: 64M
+
