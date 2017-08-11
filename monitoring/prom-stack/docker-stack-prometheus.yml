@@ -57,3 +57,24 @@ services:
           cpus: '0.50'
           memory: 128M  
 
+  grafana:
+    image: ekambaram/grafana:${GRAFANA_VERSION:-v2}
+    ports:
+      - 3000:3000
+    networks:
+      - prom-net
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+	  GF_USERS_ALLOW_SIGN_UP: false
+      PROMETHEUS_ENDPOINT: http://prometheus:9090
+      IMPORT_DASHBOARDS: Y
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 64M
+        reservations:
+          cpus: '0.50'
+          memory: 32M
