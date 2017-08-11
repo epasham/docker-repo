@@ -16,10 +16,10 @@ services:
       resources:
         limits:
           cpus: '0.10'
-          memory: 128M
+          memory: '128M'
         reservations:
           cpus: '0.10'
-          memory: 64M		  
+          memory: '64M'
    node-exporter:
     image: prom/node-exporter
     networks:
