@@ -20,4 +20,23 @@ services:
         reservations:
           cpus: '0.10'
           memory: 64M
+          
+   node-exporter:
+    image: prom/node-exporter
+    networks:
+      - prom-net
+    volumes:
+      - /proc:/host/proc
+      - /sys:/host/sys
+      - /:/rootfs
+    command: -collector.procfs /host/proc -collector.sysfs /host/sys -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($$|/)"
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 32M
+        reservations:
+          cpus: '0.10'
+          memory: 16M         
 
