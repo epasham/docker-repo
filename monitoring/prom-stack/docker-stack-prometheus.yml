@@ -2,11 +2,11 @@ version: "3"
 
 services:
   cadvisor:
-    image: google/cadvisor:v0.26.1
+    image: google/cadvisor:${CADVISOR_VERSION:-v0.25.0}
     networks:
       - prom-net
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock,readonly
       - /:/rootfs
       - /var/run:/var/run
       - /sys:/sys
@@ -20,8 +20,8 @@ services:
         reservations:
           cpus: '0.10'
           memory: 64M
-  
-  node-exporter:
+		  
+  node-exporter:${NODE_EXPORTER_VERSION:-latest}
     image: prom/node-exporter
     networks:
       - prom-net
@@ -41,7 +41,7 @@ services:
           memory: 16M
           
   prometheus:
-    image: ekambaram/prom:1.7.1
+    image: ekambaram/prom:${PROMETHEUS_SWARM_VERSION:-1.7.1}
     ports:
       - 9090:9090
     networks:
@@ -58,16 +58,16 @@ services:
           memory: 128M  
 
   grafana:
-    image: ekambaram/grafana:v2
+    image: ekambaram/grafana:${GRAFANA_VERSION:-v2}
     ports:
       - 3000:3000
     networks:
       - prom-net
     environment:
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
-      GF_USERS_ALLOW_SIGN_UP: false
+      GF_USERS_ALLOW_SIGN_UP: 'false'
       PROMETHEUS_ENDPOINT: http://prometheus:9090
-      IMPORT_DASHBOARDS: Y
+      IMPORT_DASHBOARDS: 'Y'
     deploy:
       mode: replicated
       replicas: 1
