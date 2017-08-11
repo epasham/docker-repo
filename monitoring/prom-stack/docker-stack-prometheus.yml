@@ -78,3 +78,6 @@ services:
         reservations:
           cpus: '0.50'
           memory: 32M
+
+  networks:
+    prom-net:
