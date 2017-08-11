@@ -6,7 +6,7 @@ services:
     networks:
       - prom-net
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock,readonly
+      - /var/run/docker.sock:/var/run/docker.sock
       - /:/rootfs
       - /var/run:/var/run
       - /sys:/sys
@@ -19,8 +19,7 @@ services:
           memory: 128M
         reservations:
           cpus: '0.10'
-          memory: 64M
-		  
+          memory: 64M		  
    node-exporter:
     image: prom/node-exporter
     networks:
