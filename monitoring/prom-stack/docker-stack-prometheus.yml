@@ -21,7 +21,7 @@ services:
           cpus: '0.10'
           memory: 64M
           
-   node-exporter:
+   node-exporter:${NODE_EXPORTER_VERSION:-latest}
     image: prom/node-exporter
     networks:
       - prom-net
@@ -38,5 +38,22 @@ services:
           memory: 32M
         reservations:
           cpus: '0.10'
-          memory: 16M         
+          memory: 16M
+          
+  prometheus:
+    image: ekambaram/prom:${PROMETHEUS_SWARM_VERSION:-1.7.1}
+    ports:
+      - 9090:9090
+    networks:
+      - prom-net
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.50'
+          memory: 128M  
 
