@@ -21,7 +21,7 @@ services:
           cpus: '0.10'
           memory: 64M
   
-  node-exporter:
+  node:
     image: ekambaram/node-exporter:${NODE_EXPORTER_VERSION:-v0.14.0}
     networks:
       - prom-net
