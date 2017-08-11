@@ -29,9 +29,9 @@ services:
       - /proc:/host/proc
       - /sys:/host/sys
       - /:/rootfs
-      - /etc/hostname:/etc/host_hostname
+      - /etc/hostname:/etc/nodename
     environment:
-      NODE_NAME: /etc/host_hostname
+      NODE_ID: '{{.Node.ID}}'
     command: -collector.procfs /host/proc -collector.sysfs /host/sys -collector.textfile.directory /etc/node-exporter/ -collectors.enabled 'conntrack,diskstats,entropy,filefd,filesystem,loadavg,mdadm,meminfo,netdev,netstat,stat,textfile,time,vmstat,ipvs' -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($$|/)"
     deploy:
       mode: global
