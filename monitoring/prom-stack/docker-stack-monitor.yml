@@ -22,14 +22,17 @@ services:
           memory: 64M
   
   node-exporter:
-    image: prom/node-exporter:${NODE_EXPORTER_VERSION:-latest}
+    image: ekambaram/node-exporter:${NODE_EXPORTER_VERSION:-v0.14.0}
     networks:
       - prom-net
     volumes:
       - /proc:/host/proc
       - /sys:/host/sys
       - /:/rootfs
-    command: -collector.procfs /host/proc -collector.sysfs /host/sys -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($$|/)"
+      - /etc/hostname:/etc/host_hostname
+    environment:
+      NODE_NAME: /etc/host_hostname
+    command: -collector.procfs /host/proc -collector.sysfs /host/sys -collector.textfile.directory /etc/node-exporter/ -collector.filesystem.ignored-mount-points "^/(sys|proc|dev|host|etc)($$|/)"
     deploy:
       mode: global
       resources:
