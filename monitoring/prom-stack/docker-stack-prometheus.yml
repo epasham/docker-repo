@@ -18,8 +18,8 @@ services:
           cpus: '0.10'
           memory: 128M
         reservations:
-	  cpus: '0.10'
-	  memory: 64M
+          cpus: '0.10'
+          memory: 64M
 	  
    node-exporter:${NODE_EXPORTER_VERSION:-latest}
     image: prom/node-exporter
