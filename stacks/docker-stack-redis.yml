@@ -12,4 +12,4 @@ services:
         image: tenstartups/redis-commander
         command: --redis-host redis
         ports:
-            - 9801:8081
+            - 9881:8081
