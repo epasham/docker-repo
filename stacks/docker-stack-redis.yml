@@ -7,4 +7,9 @@ services:
         image: transcranial/redmon
         command: redmon -r redis://redis
         ports:
-            - "4567:4567"
+            - 4567:4567
+    redis-viewer:
+        image: tenstartups/redis-commander
+        command: --redis-host redis
+        ports:
+            - 9801:8081
