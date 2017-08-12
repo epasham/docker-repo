@@ -18,11 +18,3 @@ services:
         - postgres
     ports:
       - '8082:9000'
-      
-  database-viewer:
-    image: jacksoncage/phppgadmin
-    environment:
-      - 'POSTGRES_HOST=postgres'
-      - 'POSTGRES_PORT=5432'
-    ports:
-      - 8083:80
