@@ -6,11 +6,11 @@ services:
    environment:
      MYSQL_HOST: mysql
      MYSQL_PASSWORD: secret
-     ADMIN_FIRSTNAME: Admin
-     ADMIN_LASTNAME: User
-     ADMIN_EMAIL: admin@example.com
-     ADMIN_USERNAME: ostadmin
-     ADMIN_PASSWORD: Admin1
+     ADMIN_FIRSTNAME: 'Admin'
+     ADMIN_LASTNAME: 'User'
+     ADMIN_EMAIL: 'admin@example.com'
+     ADMIN_USERNAME: 'ostadmin'
+     ADMIN_PASSWORD: 'Admin1'
    ports:
      - 8180:80
    networks:
