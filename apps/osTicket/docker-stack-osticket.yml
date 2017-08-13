@@ -12,9 +12,9 @@ services:
     image: mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: 'osticket'
-      MYSQL_USER: 'osticket'
-      MYSQL_PASSWORD: 'mysecretpw'
+      MYSQL_DATABASE: osticket
+      MYSQL_USER: osticket
+      MYSQL_PASSWORD: mysecretpw
       
   memcached:
     image: bitnami/memcached:latest
