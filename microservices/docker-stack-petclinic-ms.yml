@@ -2,7 +2,7 @@ version: '3'
 
 services:
   config-server:
-    image: ekambaram/spring-petclinic-config-server
+    image: ekambaram/spring-petclinic-config-server:v1
     ports:
      - 8888:8888
     networks:
@@ -12,7 +12,7 @@ services:
      - customer-net
 
   discovery-server:
-    image: ekambaram/spring-petclinic-discovery-server
+    image: ekambaram/spring-petclinic-discovery-server:v1
     depends_on:
       - config-server
     entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
@@ -25,7 +25,7 @@ services:
      - customer-net
 
   customers-service:
-    image: ekambaram/spring-petclinic-customers-service
+    image: ekambaram/spring-petclinic-customers-service:v1
     depends_on:
      - config-server
      - discovery-server
@@ -36,7 +36,7 @@ services:
      - customer-net
 
   visits-service:
-    image: ekambaram/spring-petclinic-visits-service
+    image: ekambaram/spring-petclinic-visits-service:v1
     depends_on:
      - config-server
      - discovery-server
@@ -47,7 +47,7 @@ services:
      - visit-net
 
   vets-service:
-    image: ekambaram/spring-petclinic-vets-service
+    image: ekambaram/spring-petclinic-vets-service:v1
     depends_on:
      - config-server
      - discovery-server
@@ -58,7 +58,7 @@ services:
      - vet-net
 
   api-gateway:
-    image: ekambaram/spring-petclinic-api-gateway
+    image: ekambaram/spring-petclinic-api-gateway:v1
     depends_on:
      - config-server
      - discovery-server
@@ -72,7 +72,7 @@ services:
      - customer-net
 
   tracing-server:
-    image: ekambaram/spring-petclinic-tracing-server
+    image: ekambaram/spring-petclinic-tracing-server:v1
     depends_on:
      - config-server
      - discovery-server
@@ -86,7 +86,7 @@ services:
      - customer-net
 
   admin-server:
-    image: ekambaram/spring-petclinic-admin-server
+    image: ekambaram/spring-petclinic-admin-server:v1
     depends_on:
      - config-server
      - discovery-server
@@ -101,5 +101,3 @@ networks:
   vet-net:
   visit-net:
   customer-net:
-  
-  
