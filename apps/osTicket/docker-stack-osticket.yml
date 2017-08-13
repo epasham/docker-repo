@@ -6,9 +6,9 @@ services:
    environment:
      USE_MEMCACHE: 'y'
    ports:
-    - 8180:80
+     - 8180:80
    networks:
-    - osticket-net
+     - osticket-net
 
   mysql:
     image: mysql:5.7
@@ -20,17 +20,17 @@ services:
     volumes:
       - dbdata:/var/lib/mysql
     networks:
-     - osticket-net
+      - osticket-net
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: mysecretpw
       MYSQL_DATABASE: osticket
       MYSQL_USER: osticket
-      MYSQL_PASSWORD: osticket
+      MYSQL_PASSWORD: mysecretpw
       
   memcached:
     image: bitnami/memcached:latest
     networks:
-     - osticket-net
+      - osticket-net
       
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -39,12 +39,12 @@ services:
       OST_PORT: 3306
       OST_USER: osticket
     ports:
-     - 8181:80
+      - 8181:80
     networks:
-     - osticket-net
+      - osticket-net
      
 volumes:
- dbdata:
+  dbdata:
  
 networks:
   osticket-net:
