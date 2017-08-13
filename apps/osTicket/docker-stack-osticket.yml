@@ -4,7 +4,7 @@ services:
   osticket:
    image: matiasvictor/docker-osticket
    environment:
-     USE_MEMCACHE: y
+     USE_MEMCACHE: 'y'
    ports:
     - 8180:80
 
