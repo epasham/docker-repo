@@ -5,8 +5,6 @@ services:
    image: campbellsoftwaresolutions/osticket
    environment:
      MYSQL_HOST: mysql
-     MYSQL_DATABASE: osticket
-     MYSQL_USER: osticket
      MYSQL_PASSWORD: secret
    ports:
      - 8180:80
