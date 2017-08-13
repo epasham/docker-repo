@@ -1,21 +1,22 @@
-version: '2'
+version: '3'
+
 services:
   config-server:
     image: mszarlinski/spring-petclinic-config-server
-    container_name: config-server
     ports:
      - 8888:8888
+    networks:
+      - cloud-net
 
   discovery-server:
     image: mszarlinski/spring-petclinic-discovery-server
-    container_name: discovery-server
-    links:
-     - config-server
     depends_on:
       - config-server
     entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 8761:8761
+    networks:
+      - cloud-net
 
   customers-service:
     image: mszarlinski/spring-petclinic-customers-service
@@ -78,26 +79,31 @@ services:
 
   tracing-server:
     image: mszarlinski/spring-petclinic-tracing-server
-    container_name: tracing-server
-    links:
-     - config-server
-     - discovery-server
     depends_on:
      - config-server
      - discovery-server
     entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 9411:9411
+    networks:
+      - cloud-net
 
   admin-server:
     image: mszarlinski/spring-petclinic-admin-server
-    container_name: admin-server
-    links:
-     - config-server
-     - discovery-server
     depends_on:
      - config-server
      - discovery-server
     entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 9090:9090
+    networks:
+      - cloud-net
+     
+networks:
+  cloud-net:
+  vet-net:
+  gateway-net:
+  visit-net:
+  customer-net:
+  
+  
