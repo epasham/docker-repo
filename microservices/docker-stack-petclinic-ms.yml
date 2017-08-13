@@ -7,6 +7,7 @@ services:
      - 8888:8888
     networks:
       - cloud-net
+      - vet-net
 
   discovery-server:
     image: mszarlinski/spring-petclinic-discovery-server
@@ -17,6 +18,7 @@ services:
      - 8761:8761
     networks:
       - cloud-net
+      - vet-net
 
   customers-service:
     image: mszarlinski/spring-petclinic-customers-service
@@ -48,28 +50,23 @@ services:
 
   vets-service:
     image: mszarlinski/spring-petclinic-vets-service
-    container_name: vets-service
-    links:
-     - config-server
-     - discovery-server
-     - tracing-server
     depends_on:
      - config-server
      - discovery-server
     entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 8083:8083
+    networks:
+     - vet-net
 
   api-gateway:
     image: mszarlinski/spring-petclinic-api-gateway
-    container_name: api-gateway
-    links:
-     - config-server
-     - discovery-server
-     - customers-service
-     - visits-service
-     - vets-service
-     - tracing-server
+    networks:
+     - cloud-net:
+     - vet-net:
+     - gateway-net:
+     - visit-net:
+     - customer-net:
     depends_on:
      - config-server
      - discovery-server
@@ -86,7 +83,8 @@ services:
     ports:
      - 9411:9411
     networks:
-      - cloud-net
+     - cloud-net
+     - vet-net
 
   admin-server:
     image: mszarlinski/spring-petclinic-admin-server
@@ -97,7 +95,7 @@ services:
     ports:
      - 9090:9090
     networks:
-      - cloud-net
+     - cloud-net
      
 networks:
   cloud-net:
