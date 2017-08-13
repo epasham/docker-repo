@@ -43,5 +43,8 @@ services:
     networks:
      - osticket-net
      
+volumes:
+ dbdata:
+ 
 networks:
   osticket-net:
