@@ -2,9 +2,7 @@ version: '3'
 
 services:
   osticket:
-   image: matiasvictor/docker-osticket
-   environment:
-     USE_MEMCACHE: 'y'
+   image: campbellsoftwaresolutions/osticket
    ports:
      - 8180:80
    networks:
@@ -22,16 +20,11 @@ services:
     networks:
       - osticket-net
     environment:
-      MYSQL_ROOT_PASSWORD: mysecretpw
+      MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: osticket
       MYSQL_USER: osticket
-      MYSQL_PASSWORD: mysecretpw
-      
-  memcached:
-    image: bitnami/memcached:latest
-    networks:
-      - osticket-net
-      
+      MYSQL_PASSWORD: secret
+            
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
