@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  osticket:
+   image: matiasvictor/docker-osticket
+   ports:
+    - 8180:80
+   links:
+    - mysql:mysql
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: s3cret
+      MYSQL_DATABASE: osticket
+      MYSQL_USER: osticket
+      MYSQL_PASSWORD: s3cret
