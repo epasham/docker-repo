@@ -22,8 +22,8 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      OST_HOST: 'mysql'
+      OST_HOST: mysql
       OST_PORT: 3306
-      OST_USER: 'mysecretpw'
+      OST_USER: osticket
     ports:
       - 8181:80
