@@ -3,6 +3,8 @@ version: '3'
 services:
   osticket:
    image: campbellsoftwaresolutions/osticket
+   environment:
+     MYSQL_HOST: mysql
    ports:
      - 8180:80
    networks:
