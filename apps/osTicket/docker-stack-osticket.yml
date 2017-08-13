@@ -9,7 +9,7 @@ services:
   mysql:
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: s3cret
+      MYSQL_ROOT_PASSWORD: mysecretpw
       MYSQL_DATABASE: osticket
       MYSQL_USER: osticket
-      MYSQL_PASSWORD: s3cret
+      MYSQL_PASSWORD: mysecretpw
