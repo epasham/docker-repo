@@ -3,22 +3,27 @@ version: '3'
 services:
   osticket:
    image: matiasvictor/docker-osticket
+   environment:
+     USE_MEMCACHE: y
    ports:
     - 8180:80
 
   mysql:
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: mysecretpw
-      MYSQL_DATABASE: osticket
-      MYSQL_USER: osticket
-      MYSQL_PASSWORD: mysecretpw
+      MYSQL_ROOT_PASSWORD: 'mysecretpw'
+      MYSQL_DATABASE: 'osticket'
+      MYSQL_USER: 'osticket'
+      MYSQL_PASSWORD: 'mysecretpw'
+      
+  memcached:
+    image: bitnami/memcached:latest
       
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      OST_HOST: mysql
+      OST_HOST: 'mysql'
       OST_PORT: 3306
-      OST_USER: mysecretpw
+      OST_USER: 'mysecretpw'
     ports:
       - 8181:80
