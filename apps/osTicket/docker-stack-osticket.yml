@@ -8,8 +8,6 @@ services:
      MYSQL_DATABASE: osticket
      MYSQL_USER: osticket
      MYSQL_PASSWORD: secret
-     INSTALL_SECRET: secret
-     LANGUAGE: fa
    ports:
      - 8180:80
    networks:
