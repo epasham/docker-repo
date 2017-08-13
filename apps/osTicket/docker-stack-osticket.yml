@@ -11,7 +11,7 @@ services:
   mysql:
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 'mysecretpw'
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: 'osticket'
       MYSQL_USER: 'osticket'
       MYSQL_PASSWORD: 'mysecretpw'
