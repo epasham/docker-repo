@@ -67,6 +67,9 @@ services:
      - 8080:8080
     networks:
      - cloud-net
+     - vet-net
+     - visit-net
+     - customer-net
 
   tracing-server:
     image: ekambaram/spring-petclinic-tracing-server:v1
