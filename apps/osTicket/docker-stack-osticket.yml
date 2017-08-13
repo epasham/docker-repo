@@ -2,7 +2,7 @@ version: '3'
 
 services:
   osticket:
-   image: matiasvictor/docker-osticket:1.10
+   image: matiasvictor/docker-osticket
    ports:
     - 8180:80
 
