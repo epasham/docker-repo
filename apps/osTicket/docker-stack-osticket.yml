@@ -2,7 +2,7 @@ version: '3'
 
 services:
   osticket:
-   image: osticket/osticket
+   image: campbellsoftwaresolutions/osticket
    environment:
      MYSQL_HOST: mysql
      MYSQL_DATABASE: osticket
