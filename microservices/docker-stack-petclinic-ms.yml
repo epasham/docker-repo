@@ -34,7 +34,6 @@ services:
     - 8081:8081
     networks:
      - customer-net
-     - gateway-net
 
   visits-service:
     image: ekambaram/spring-petclinic-visits-service:v1
@@ -46,7 +45,6 @@ services:
      - 8082:8082
     networks:
      - visit-net
-     - gateway-net
 
   vets-service:
     image: ekambaram/spring-petclinic-vets-service:v1
@@ -58,7 +56,6 @@ services:
      - 8083:8083
     networks:
      - vet-net
-     - gateway-net
 
   api-gateway:
     image: ekambaram/spring-petclinic-api-gateway:v1
@@ -70,7 +67,6 @@ services:
      - 8080:8080
     networks:
      - cloud-net
-     - gateway-net
 
   tracing-server:
     image: ekambaram/spring-petclinic-tracing-server:v1
@@ -105,4 +101,3 @@ networks:
   vet-net:
   visit-net:
   customer-net:
-  gateway-net:
