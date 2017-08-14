@@ -30,5 +30,5 @@ volumes:
   appdata:
     driver: local
  
- networks:
-   shop-net:
+networks:
+  shop-net:
