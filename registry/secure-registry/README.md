@@ -41,4 +41,11 @@ For the secure registry, we need to run a container which has the SSL certificat
       -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
       registry
       
-      
+  1) --restart unless-stopped <br />
+     restart the container when it exits, unless it has been explicitly stopped. When the host restarts, Docker will start the                registry container, so it’s always available.
+  2) -v $pwd\certs:c:\certs <br />
+     mount the local certs folder into the container, so the registry server can access the certificate and key files.
+  3) -e REGISTRY_HTTP_TLS_CERTIFICATE <br />
+     specify the location of the SSL certificate file.
+  4) -e REGISTRY_HTTP_TLS_KEY <br />
+     specify the location of the SSL key file.  
