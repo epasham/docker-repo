@@ -19,8 +19,6 @@ services:
       - appdata:/bitnami
     depends_on:
       - mariadb
-    environment:
-      - PRESTASHOP_HOST=localhost
     networks:
       - shop-net
 
