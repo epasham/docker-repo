@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  mariadb:
+    image: bitnami/mariadb
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - 'dbdata:/bitnami'
+    networks:
+      - shop-net
+      
+  prestashop:
+    image: bitnami/prestashop
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - appdata:/bitnami
+    depends_on:
+      - mariadb
+    environment:
+      - PRESTASHOP_HOST=localhost
+    networks:
+      - shop-net
+
+volumes:
+  dbdata:
+    driver: local
+  appdata:
+    driver: local
+ 
+ networks:
+   shop-net:
