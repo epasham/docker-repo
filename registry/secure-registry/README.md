@@ -49,3 +49,9 @@ For the secure registry, we need to run a container which has the SSL certificat
      specify the location of the SSL certificate file.
   4) -e REGISTRY_HTTP_TLS_KEY <br />
      specify the location of the SSL key file.  
+     
+##  push and pull an image from/to our secure registry.
+    docker pull centos:7
+    docker tag centos:7 127.0.0.1:5000/centos:7
+    docker push 127.0.0.1:5000/centos:7
+    docker pull 127.0.0.1:5000/centos:7
