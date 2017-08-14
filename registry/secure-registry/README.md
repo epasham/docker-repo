@@ -26,3 +26,19 @@ openssl req -newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key -x509 -days
     mkdir /etc/docker/certs.d
     mkdir /etc/docker/certs.d/127.0.0.1:5000 
     cp $(pwd)/certs/domain.crt /etc/docker/certs.d/127.0.0.1:5000/ca.crt
+
+## restart the docker daemon
+
+# Run secure registry
+For the secure registry, we need to run a container which has the SSL certificate and key files available. We do with an additional volume mount (so we have one volume for registry data, and one for certs). We also need to specify the location of the certificate files, which we’ll do with environment variables
+
+    mkdir registrydata
+    docker run -d -p 5000:5000 --name registry \
+      --restart unless-stopped \
+      -v $(pwd)/registrydata:/var/lib/registry \
+      -v $(pwd)/certs:/certs \
+      -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+      -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+      registry
+      
+      
