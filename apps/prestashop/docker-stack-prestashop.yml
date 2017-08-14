@@ -24,6 +24,17 @@ services:
     networks:
       - shop-net
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+    ports:
+      - '8081:80'
+    networks:
+      - shop-net
+
 volumes:
   dbdata:
     driver: local
