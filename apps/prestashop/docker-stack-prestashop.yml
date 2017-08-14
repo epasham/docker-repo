@@ -12,6 +12,8 @@ services:
       
   prestashop:
     image: bitnami/prestashop
+    environment:
+      PRESTASHOP_HOST: 'localhost'
     ports:
       - 80:80
       - 443:443
