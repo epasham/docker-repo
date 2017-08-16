@@ -47,7 +47,10 @@ rebuild
 ansicolor
 chucknorris
 pam-auth
+workflow-api
 workflow-step-api
+workflow-support
+workflow-job
 authentication-tokens
 antisamy-markup-formatter
 workflow-scm-step
