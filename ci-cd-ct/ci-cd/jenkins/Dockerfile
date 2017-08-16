@@ -16,3 +16,6 @@ RUN /usr/local/bin/install-plugins.sh $(cat /usr/share/jenkins/ref/plugins.txt |
 ############################################
 # Jenkins settings
 COPY config/config.xml /usr/share/jenkins/ref/config.xml
+
+# Credentials
+COPY config/credentials.xml /usr/share/jenkins/ref/credentials.xml
