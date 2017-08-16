@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  jenkins:
+    image: ekambaram/jenkins:ci
+  ports:
+    - 18080:8080
+  networks:
+    - ci-net
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - jenkinsdata:/var/lib/jenkins
+    
+volumes:
+  jenkinsdata:
+    driver: local
+    
+networks:
+  ci-net:
