@@ -13,6 +13,9 @@ services:
       retries: 3
     environment:
       DB: 'db'
+      DEBUG: 'False'
+      THREADED: 'True'
+      ADMIN_PASSWORD_FILE: '/run/secrets/admin_password'
     networks:
       - pets-net
             
@@ -31,3 +34,7 @@ services:
               
 networks:
   pets-net:
+  
+secrets:
+  admin_password:
+    external: true
