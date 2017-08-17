@@ -3,6 +3,7 @@ services:
   web:
     image: ekambaram/pets-demo:v1
     deploy:
+      mode: replicated
       replicas: 3
     ports:
       - 5000:5000
