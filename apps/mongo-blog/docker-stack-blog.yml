@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  web:
+    image: ekambaram/test:v1
+    ports:
+      - 8000:8000
+    environment:
+      NODE_ENV: 'production'
+      MONGO_URL: 'mongodb://db:27017/mern-starter'
+    networks:
+      - mean-net
+  db:
+    image: mongo:latest
+    networks:
+      - mean-net
+
+
+networks:
+  mean-net:
