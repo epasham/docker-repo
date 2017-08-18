@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: ekambaram/mern:v1
+    image: ekambaram/mean-blog:v1
     ports:
       - 8000:8000
     environment:
