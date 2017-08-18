@@ -24,6 +24,6 @@ services:
   volumes:
     mongodata:
       driver: local
-	  
+  
   networks:
     eddi-net:
