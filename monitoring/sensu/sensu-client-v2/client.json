@@ -1,17 +1,15 @@
 {
-  "client": {
-    "name": "CLIENT_NAME",
-    "address": "CLIENT_IP_ADDRESS",
-    "subscriptions": [
-      "ALL"
-    ],
+    "client": {
+        "name": "CLIENT_NAME",
+        "address": "CLIENT_IP_ADDRESS",
+        "subscriptions": [
+            "docker"
+        ]
+    },
     "keepalive": {
-      "thresholds": {
-        "warning": 60,
-        "critical": 120
-      },
-      "handlers": ["slack"],
-      "refresh": 300
-    } 
-  }
+        "thresholds": {
+            "critical": 60
+        },
+        "refresh": 300
+    }
 }
