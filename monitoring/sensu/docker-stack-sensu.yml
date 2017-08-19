@@ -14,12 +14,12 @@ services:
       - source: sensu_chk_cfg
         target: /etc/sensu/conf.d/check-docker.json
     networks:
-      sensu-net
+      - sensu-net
 
   sensu-client:
     image: ekambaram/sensu-client:v1
     networks:
-      sensu-net
+      - sensu-net
 
 configs:
   sensu_chk_cfg:
