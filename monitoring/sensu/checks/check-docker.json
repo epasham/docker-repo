@@ -1,0 +1,12 @@
+{
+    "checks": {
+        "load_docker_metrics": {
+            "type": "metric",
+            "command": "load-docker-metrics.sh",
+            "subscribers": [
+                "docker"
+            ],
+            "interval": 10
+        }
+    }
+}
