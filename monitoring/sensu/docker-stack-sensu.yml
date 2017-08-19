@@ -1,19 +1,29 @@
 version: '3'
 
 services:
-  sensuserver:
+  sensu-server:
     image: hiroakis/docker-sensu-server
     ports:
       - 13000:3000
       - 4567:4567
       - 5671:5671
       - 15672:15672
-	deploy:
+    deploy:
       replicas: 1
     configs:
       - source: sensu_chk_cfg
-        target: /etc/sensu/conf.d/check-docker.json  
-	
+        target: /etc/sensu/conf.d/check-docker.json
+    networks:
+      sensu-net
+
+  sensu-client:
+    image: ekambaram/sensu-client:v1
+    networks:
+      sensu-net
+
 configs:
   sensu_chk_cfg:
     file: ./checks/check-docker.json
+
+networks:
+  sensu-net:
