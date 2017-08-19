@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:14.04
 
 # Install sensu
 RUN apt-get update \
