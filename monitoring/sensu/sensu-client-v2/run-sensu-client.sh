@@ -5,7 +5,7 @@ usage(){
 	exit 1
 }
 
-[[ $# -ne 3 ]] && usage
+[[ $# -ne 2 ]] && usage
 
 #SENSU_SERVER=$(grep sensuserver /etc/hosts | awk '{ print $1}')
 SENSU_SERVER=$1
