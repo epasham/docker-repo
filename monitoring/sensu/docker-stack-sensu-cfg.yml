@@ -19,6 +19,8 @@ services:
   sensu-client:
     image: ekambaram/sensu-client:v2
     command: sensu-server sensu-client
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - sensu-net
 
