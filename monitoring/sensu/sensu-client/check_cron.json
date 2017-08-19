@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "cron": {
+      "command": "/opt/sensu/embedded/bin/check-process.rb -p cron2",
+      "standalone": true,
+      "interval": 5,
+      "handlers": ["default", "debug"]
+    }
+  }
+}
