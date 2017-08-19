@@ -18,7 +18,7 @@ services:
 
   sensu-client:
     image: ekambaram/sensu-client:v2
-    command: sensu-server ${hostname}
+    command: sensu-server sensu-client
     networks:
       - sensu-net
 
