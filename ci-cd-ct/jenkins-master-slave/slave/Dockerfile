@@ -12,26 +12,25 @@ RUN curl --create-dirs -sSLo /usr/share/jenkins/swarm-client-$JENKINS_SWARM_VERS
   && chmod 755 /usr/share/jenkins
 
 
-  #
-  # Install Docker Compose
-  #
-  ENV DOCKER_COMPOSE_VERSION 1.12.0
-  RUN \
-      curl --insecure -L https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && \
-          chmod +x /usr/local/bin/docker-compose
+#
+# Install Docker Compose
+#
+ENV DOCKER_COMPOSE_VERSION 1.12.0
+RUN \
+    curl --insecure -L https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && \
+    chmod +x /usr/local/bin/docker-compose
 
 
-          COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
-          COPY run.sh /usr/local/bin/run.sh
-          RUN chmod 755 /usr/local/bin/jenkins-slave.sh
-          RUN chmod 755 /usr/local/bin/run.sh
+COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
+COPY run.sh /usr/local/bin/run.sh
+RUN chmod 755 /usr/local/bin/jenkins-slave.sh
+RUN chmod 755 /usr/local/bin/run.sh
 
 
-          ENV JENKINS_MASTER master:8080
-          ENV WORKERS_NODES=1
-          ENV WORKER_LABELS=generic
-          USER jenkins
-          VOLUME /var/jenkins_home
+ENV JENKINS_MASTER master:8080
+ENV WORKERS_NODES=1
+ENV WORKER_LABELS=generic
+USER jenkins
+VOLUME /var/jenkins_home
 
-          ENTRYPOINT ["/usr/local/bin/run.sh"]
-
+ENTRYPOINT ["/usr/local/bin/run.sh"]
