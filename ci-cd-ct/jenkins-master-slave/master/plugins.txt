@@ -126,4 +126,4 @@ blueocean-dashboard:1.0.1
 blueocean-git-pipeline:1.0.1
 blueocean-config:1.0.1
 blueocean:1.0.1
-chucknorris:1.
+chucknorris:1.0
