@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkins-master:v1
+    ports:
+      - 18080:8080
+      - 50000:50000
+    networks:
+      - ci-net
+    volumes:
+      - jenkinsdata:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+
+  worker:
+    image: ekambaram/jenkins-slave:v1
+    ports:
+      - 18081:8081
+    volumes:
+      - jenkinsdata:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    environment:
+      - JENKINS_MASTER: 'jenkins:8080'
+      - JENKINS_USERNAME: 'jenkins'
+      - WORKERS_NODES: 1
+      - WORKERS_LABELS: 'slave'
+    networks:
+      - ci-net
+      
+        
+networks:
+    ci-net:
+      driver: overlay
+      
+volumes:
+  jenkinsdata:
+    driver: local
