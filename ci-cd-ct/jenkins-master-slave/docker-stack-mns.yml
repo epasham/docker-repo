@@ -2,7 +2,7 @@ version: '3'
 
 services:
   jenkins:
-    image: jenkins-master:v1
+    image: ekambaram/jenkins-master:v1
     ports:
       - 8080:8080
       - 50000:50000
