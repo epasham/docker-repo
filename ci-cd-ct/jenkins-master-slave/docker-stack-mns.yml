@@ -12,11 +12,13 @@ services:
       - jenkinsdata:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
 
   worker:
     image: ekambaram/jenkins-slave:v1
-    ports:
-      - 18081:8081
     volumes:
       - jenkinsdata:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
