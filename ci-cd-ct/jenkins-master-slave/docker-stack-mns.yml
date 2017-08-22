@@ -11,7 +11,6 @@ services:
     volumes:
       - jenkinsdata:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
     deploy:
       replicas: 1
       placement:
@@ -22,7 +21,6 @@ services:
     volumes:
       - jenkinsdata:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
     environment:
       JENKINS_MASTER: 'jenkins:8080'
       JENKINS_USERNAME: 'jenkins'
