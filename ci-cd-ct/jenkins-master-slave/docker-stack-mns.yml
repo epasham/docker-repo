@@ -4,7 +4,7 @@ services:
   jenkins:
     image: jenkins-master:v1
     ports:
-      - 18080:8080
+      - 8080:8080
       - 50000:50000
     networks:
       - ci-net
