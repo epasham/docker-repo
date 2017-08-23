@@ -24,3 +24,10 @@ these files according yours needs.
 # NGINX as Elasticsearch proxy
 We need DNS Round Robin in ( endpoint_mode: dnsrr ) Swarm service configuration for Elasticsearch to achieve scaling on unicast messages.
 Docker can't publish on ingress network (VIP is required). So an NGINX included in front of Elasticsearch as a proxy.
+
+# scale the ELK Stack
+This Docker Stack is easly scalable. To scale logstash service, use the below command
+    $ docker service scale elk_logstash=3
+follow the same for other services that you want to scale
+
+Elasticsearch data is stored in elasticsearch_data volume on ES node. Before scaling elasticsearch instance, make sure you have enough free nodes. You cannot have two instance of elasticsearch on the same node due to same data volume conflict.
