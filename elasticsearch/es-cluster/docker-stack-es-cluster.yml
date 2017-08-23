@@ -63,7 +63,7 @@ services:
     deploy:
       endpoint_mode: dnsrr
       mode: 'replicated'
-      replicas: 1
+      replicas: 3
       resources:
         limits:
           memory: 1G
