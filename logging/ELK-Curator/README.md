@@ -22,5 +22,5 @@ NOTE: Curator is configured to purge documents from logstash-* index that are ol
 these files according yours needs.
 
 # NGINX as Elasticsearch proxy
-We need DNS Round Robin in ( dnsrr ) Swarm service configuration for Elasticsearch to achieve scaling on unicast messages.
+We need DNS Round Robin in ( endpoint_mode: dnsrr ) Swarm service configuration for Elasticsearch to achieve scaling on unicast messages.
 Docker can't publish on ingress network (VIP is required). So an NGINX included in front of Elasticsearch as a proxy.
