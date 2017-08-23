@@ -1,0 +1,127 @@
+version: '3.2'
+services:
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.5.2
+    ports:
+      - "5601:5601"
+    environment:
+      - "ELASTICSEARCH_URL=http://elasticsearch:9200"
+    networks:
+      - elk-net
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2048M
+      restart_policy:
+        condition: on-failure
+        
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.2
+    environment:
+      - "cluster.name=docker-cluster"
+      - "network.host=0.0.0.0"
+      - "transport.host=0.0.0.0"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        hard: 65536
+        soft: 65536
+      nproc: 65538
+    volumes:
+      - elastic_data:/usr/share/elasticsearch/data/
+    networks:
+      - elk-net
+    deploy:
+      mode: replicated
+      replicas: 1
+      endpoint_mode: dnsrr
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4096M
+      update_config:
+        parallelism: 1
+        delay: 60s
+      restart_policy:
+        condition: on-failure
+        
+  es_proxy:
+    image: nginx:latest
+    ports:
+      - "9200:80"
+    networks:
+      - elk-net
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+      update_config:
+        parallelism: 1
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+    secrets:
+      - source: es_proxy_config
+        target: /etc/nginx/nginx.conf
+  logstash:
+    image: docker.elastic.co/logstash/logstash:5.5.2
+    ports:
+      - "5044:5044"
+    networks:
+      - elk
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1024M
+      update_config:
+        parallelism: 1
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+    secrets:
+      - source: logstash_config
+        target: /usr/share/logstash/pipeline/logstash.conf
+  curator:
+    image: valerianomanassero/curator-centos:5.1.2
+    networks:
+      - elk
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+    secrets:
+      - source: curator_config
+        target: /root/.curator/curator.yml
+      - source: curator_actions_config
+        target: /root/.curator/actions.yml
+secrets:
+  logstash_cfg:
+    file: ./config/logstash/logstash.conf
+  curator_cfg:
+    file: ./config/curator/curator.yml
+  curator_actions_cfg:
+    file: ./config/curator/actions.yml
+  es_proxy_cfg:
+    file: ./config/es_proxy/nginx.conf
+volumes:
+  elastic_data:
+    driver: local
+networks:
+  elk-net:
+    driver: overlay 
