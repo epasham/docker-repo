@@ -120,7 +120,7 @@ configs:
   curator_actions_cfg:
     file: ./config/curator/actions.yml
   es_proxy_cfg:
-    file: ./config/es_proxy/nginx.conf
+    file: ./config/es-proxy/nginx.conf
     
 volumes:
   esdata:
