@@ -34,7 +34,7 @@ services:
         soft: 65536
       nproc: 65538
     volumes:
-      - elastic_data:/usr/share/elasticsearch/data/
+      - esdata:/usr/share/elasticsearch/data/
     networks:
       - elk-net
     deploy:
@@ -68,15 +68,16 @@ services:
         delay: 5s
       restart_policy:
         condition: on-failure
-    secrets:
-      - source: es_proxy_config
+    configs:
+      - source: es_proxy_cfg
         target: /etc/nginx/nginx.conf
+  
   logstash:
     image: docker.elastic.co/logstash/logstash:5.5.2
     ports:
       - "5044:5044"
     networks:
-      - elk
+      - elk-net
     deploy:
       mode: replicated
       replicas: 1
@@ -89,13 +90,14 @@ services:
         delay: 5s
       restart_policy:
         condition: on-failure
-    secrets:
-      - source: logstash_config
+    configs:
+      - source: logstash_cfg
         target: /usr/share/logstash/pipeline/logstash.conf
+  
   curator:
     image: valerianomanassero/curator-centos:5.1.2
     networks:
-      - elk
+      - elk-net
     deploy:
       mode: replicated
       replicas: 1
@@ -105,12 +107,12 @@ services:
           memory: 256M
       restart_policy:
         condition: on-failure
-    secrets:
-      - source: curator_config
+    configs:
+      - source: curator_cfg
         target: /root/.curator/curator.yml
-      - source: curator_actions_config
+      - source: curator_actions_cfg
         target: /root/.curator/actions.yml
-secrets:
+configs:
   logstash_cfg:
     file: ./config/logstash/logstash.conf
   curator_cfg:
@@ -119,9 +121,11 @@ secrets:
     file: ./config/curator/actions.yml
   es_proxy_cfg:
     file: ./config/es_proxy/nginx.conf
+    
 volumes:
-  elastic_data:
+  esdata:
     driver: local
+
 networks:
   elk-net:
     driver: overlay 
