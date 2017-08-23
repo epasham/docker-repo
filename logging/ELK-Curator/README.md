@@ -21,6 +21,6 @@ The Curator configuration is stored in config/curator/curator.yml and config/cur
 NOTE: Curator is configured to purge documents from logstash-* index that are older than 30 days. You might want to configure 
 these files according yours needs.
 
-# NGINX as a proxy?
+# NGINX as Elasticsearch proxy
 We need DNS Round Robin in ( dnsrr ) Swarm service configuration for Elasticsearch to achieve scaling on unicast messages.
 Docker can't publish on ingress network (VIP is required). So an NGINX included in front of Elasticsearch as a proxy.
