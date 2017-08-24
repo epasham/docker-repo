@@ -114,13 +114,13 @@ services:
         target: /root/.curator/actions.yml
 configs:
   logstash_cfg:
-    file: ./config/logstash/logstash.conf
+    file: ./logstash/logstash.conf
   curator_cfg:
-    file: ./config/curator/curator.yml
+    file: ./curator/config/curator.yml
   curator_actions_cfg:
-    file: ./config/curator/actions.yml
+    file: ./curator/config/actions/actions.yml
   es_proxy_cfg:
-    file: ./config/es-proxy/nginx.conf
+    file: ./es-proxy/nginx.conf
     
 volumes:
   esdata:
