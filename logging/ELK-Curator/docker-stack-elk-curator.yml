@@ -95,7 +95,7 @@ services:
         target: /usr/share/logstash/pipeline/logstash.conf
   
   curator:
-    image: valerianomanassero/curator-centos:5.1.2
+    image: ekambaram/curator:5.1.2
     networks:
       - elk-net
     deploy:
