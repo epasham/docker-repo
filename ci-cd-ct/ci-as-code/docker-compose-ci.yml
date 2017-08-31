@@ -13,8 +13,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       
 volumes:
-  jenkinesdata:
-    local
+  jenkinsdata:
+    driver: local
     
 networks:
-  ci-net:
+    ci-net:
+      driver: overlay
