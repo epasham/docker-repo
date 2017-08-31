@@ -1,13 +1,15 @@
-FROM jenkinsci/jenkins:2.73
+FROM jenkins:2.73
 
-ENV JENKINS_USER jenkins
-ENV JENKINS_PASSWORD jenkins
-USER jenkins
+USER root
 
-# Install plugins
-COPY plugins.txt /var/jenkins_home/plugins.txt
-RUN /usr/local/bin/plugins.sh /var/jenkins_home/plugins.txt
+# Install Docker
+RUN apt-get update
+RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+RUN apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+RUN apt-get update
+RUN apt-get install docker-engine -y
+RUN systemctl enable docker
 
-# Copy groovy the scripts
-COPY groovy/create-admin.groovy /usr/share/jenkins/ref/init.groovy.d/create-admin.groovy
-COPY groovy/hello-world-seed-job,groovy /usr/share/jenkins/ref/init.groovy.d/hello-world-seed-job,groovy
+# Install Jenkins 
+RUN mkdir -p /var/jenkins_home
+RUN chown -R 1000:1000 /var/jenkins_home/
