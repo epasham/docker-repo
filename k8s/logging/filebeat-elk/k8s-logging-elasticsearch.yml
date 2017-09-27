@@ -1,0 +1,37 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: logging-elasticsearch
+  namespace: ns-logging
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: logging-elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: elasticsearch:2.4
+        ports:
+        - containerPort: 9200
+        resources:
+          limits:
+            cpu: 1.0
+            memory: 500Mi
+          requests:
+            cpu: 0.5
+            memory: 300Mi
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: elasticsearch-service
+  namespace: ns-logging
+spec:
+  selector:
+    name: logging-elasticsearch
+  ports:
+  - protocol: TCP
+    port: 9200
+  type: NodePort
