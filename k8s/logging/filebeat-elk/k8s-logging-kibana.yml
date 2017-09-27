@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: logging-kibana
+  labels:
+    name: logging-kibana
+  namespace: ns-logging
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: logging-kibana
+    spec:
+      containers:
+      - name: kibana
+        image: kibana:4.6.6
+        ports:
+        - containerPort: 5601
+        env:
+        - name: ES_VERSION
+          value: "2.4"
+        volumeMounts:
+          - name: config-volume
+            mountPath: /opt/kibana/config
+        resources:
+          limits:
+            cpu: 1.0
+            memory: 500Mi
+          requests:
+            cpu: 0.5
+            memory: 300Mi
+      volumes:
+      -  name: config-volume
+         configMap:
+           name: logging-cfg
+           items:
+             - key: kibana.yml
+               path: kibana.yml
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kibana-service
+  namespace: ns-logging
+spec:
+  selector:
+    name: logging-kibana
+  ports:
+  - protocol: TCP
+    port: 5601
+    targetPort: 5601
+    nodePort: 30601
+  type: NodePort
