@@ -20,9 +20,7 @@ spec:
         runAsUser: 0
       containers:
       - name: filebeat
-        image: docker.elastic.co/beats/filebeat:5.6.0
-        command: [ "/usr/share/filebeat/filebeat"]
-        args: [ "-e", "-path.config", "/usr/share/filebeat/config"]
+        image: ekambaram/filebeat:5.3.2
         resources:
           requests:
             cpu: 50m
@@ -30,46 +28,20 @@ spec:
           limits:
             cpu: 50m
             memory: 100Mi
-        env:
-          - name: LOGSTASH_HOSTS
-            value: logstash-service:5044
-          - name: LOG_LEVEL
-            value: info
-          - name: FILEBEAT_HOST
-            valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
+        securityContext:
+          privileged: true
+          runAsUser: 0
         volumeMounts:
         - name: config-volume
-          mountPath: /usr/share/filebeat/config
-        - name: varlog
-          mountPath: /var/log/hostlogs
-          readOnly: true
+          mountPath: /etc/filebeat
         - name: varlogcontainers
           mountPath: /var/log/containers
-          readOnly: true
         - name: varlogpods
           mountPath: /var/log/pods
-          readOnly: true
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
-          readOnly: true
-        - name: vartmp
-          mountPath: /var/tmp/filebeat
       terminationGracePeriodSeconds: 30
-      # allow filebeat to also be scheduled on master nodes, so we can pick up kubernetes logs
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
       volumes:
-      # mount the root of var log so that system level logs (like kube-apiserver and etcd) can be read
-      - name: varlog
-        hostPath:
-          path: /var/log
-      # mount /var/tmp as a persistent place to store the filebeat registry
-      - name: vartmp
-        hostPath:
-          path: /var/tmp
       # mount /var/log/containers to get friendly named symlinks to actual logs
       - name: varlogcontainers
         hostPath:
