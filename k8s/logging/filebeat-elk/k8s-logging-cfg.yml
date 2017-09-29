@@ -4,7 +4,25 @@ metadata:
   name: logging-cfg
   namespace: ns-logging
 data:
+  elasticsearch.yml: |
+    cluster.name: ${cluster_name}
+    #network.host: 0.0.0.0
+    http.host: 0.0.0.0
+    transport.host: 127.0.0.1
+    # minimum_master_nodes need to be explicitly set when bound on a public IP
+    # set to 1 to allow single node clusters
+    # Details: https://github.com/elastic/elasticsearch/pull/17288
+    discovery.zen.minimum_master_nodes: 1
+
+    bootstrap.memory_lock: ${bootstrap_memory_lock}
+    xpack.security.enabled: false
+    xpack.watcher.enabled: false
+    xpack.graph.enabled: false
+    xpack.monitoring.enabled: false
   logstash.yml: |
+    ## Default Logstash configuration from logstash-docker.
+    ## from https://github.com/elastic/logstash-docker/blob/master/build/logstash/config/logstash.yml
+    #
     http.host: "0.0.0.0"
     path.config: /usr/share/logstash/pipeline
 
@@ -15,7 +33,7 @@ data:
     # all input will come from filebeat, no local logs
     input {
       beats {
-        port => 5044
+        port => 5000
       }
     }
 
@@ -52,7 +70,7 @@ data:
             hosts => [ "elasticsearch-service:9200" ]
         }
     }
-  filebeat.yml: |
+  filebeat1.yml: |
     filebeat.registry_file: /var/tmp/filebeat/filebeat_registry # store the registry on the host filesystem so it doesn't get lost when pods are stopped
     filebeat.prospectors:
     # process all docker container logs, which are stored as json
@@ -96,7 +114,8 @@ data:
     ## Default Kibana configuration from kibana-docker.
     ## from https://github.com/elastic/kibana-docker/blob/master/build/kibana/config/kibana.yml
     #
-    #server.host: "0"
+    server.name: kibana
+    server.host: "0"
     elasticsearch.url: http://elasticsearch-service:9200
 
     ## Disable X-Pack
@@ -108,3 +127,53 @@ data:
     xpack.ml.enabled: false
     xpack.graph.enabled: false
     xpack.reporting.enabled: false
+  filebeat2.yml: |
+    filebeat.prospectors:
+    - input_type: log
+    tags:
+    - docker
+    paths:
+    - /var/lib/docker/containers/*/*.log
+    json:
+      keys_under_root: true
+      add_error_key: true
+      message_key: log
+    multiline:
+      pattern: '^[[:space:]]+|^Caused by:'
+      negate: false
+      match: after
+
+    output.logstash:
+      hosts: ["logstash-service:5000"]
+
+    # Available log levels are: critical, error, warning, info, debug
+    logging.level: info
+  log4j2.properties: |
+    status = error
+    appender.console.type = Console
+    appender.console.name = console
+    appender.console.layout.type = PatternLayout
+    appender.console.layout.pattern = [%d{ISO8601}][%-5p][%-25c{1.}] %marker%m%n
+    rootLogger.level = info
+    rootLogger.appenderRef.console.ref = console
+  filebeat.yml: |
+    filebeat.registry_file: /var/log/containers/filebeat_registry
+
+    filebeat.prospectors:
+    - input_type: log
+      paths:
+        - "/var/log/containers/*.log"
+    exclude_files: ['filebeat.*log','kube.*log']
+    symlinks: true
+    json.message_key: log
+    json.keys_under_root: true
+    json.add_error_key: true
+    multiline.pattern: '^\s'
+    multiline.match: after
+    document_type: kube-logs
+
+    output.logstash:
+      hosts: ["logstash-service:5000"]
+      timeout: 15
+
+    logging.level: info
