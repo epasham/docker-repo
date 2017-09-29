@@ -12,12 +12,12 @@ spec:
     spec:
       containers:
       - name: logstash
-        image: docker.elastic.co/logstash/logstash:5.6.0
+        image: docker.elastic.co/logstash/logstash:5.3.2
         ports:
-        - containerPort: 5044
+        - containerPort: 5000
         env:
-        - name: ES_VERSION
-          value: "2.4"
+        - name: LS_JAVA_OPTS
+          value: -Xmx256m -Xms256m
         volumeMounts:
           - name: config-volume
             mountPath: /usr/share/logstash/config
@@ -53,6 +53,7 @@ spec:
   selector:
     name: logging-logstash
   ports:
-  - protocol: TCP
-    port: 5044
+  - name: "5000"
+    port: 5000
+    targetPort: 5000
   type: NodePort
