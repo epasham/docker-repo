@@ -12,16 +12,22 @@ spec:
     spec:
       containers:
       - name: elasticsearch
-        image: elasticsearch:2.4
+        image: ekambaram/elasticsearch:5.3.2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ES_JAVA_OPTS
+          value: "-Xms512m -Xmx512m"
         ports:
         - containerPort: 9200
+          protocol: TCP
         resources:
+          # keep request = limit to keep this container in guaranteed class
           limits:
-            cpu: 1.0
-            memory: 500Mi
+            cpu: 1000m
+            memory: 2G
           requests:
-            cpu: 0.5
-            memory: 300Mi
+            cpu: 1000m
+            memory: 1G
 ---
 kind: Service
 apiVersion: v1
@@ -34,4 +40,5 @@ spec:
   ports:
   - protocol: TCP
     port: 9200
+    targetPort: 9200
   type: NodePort
