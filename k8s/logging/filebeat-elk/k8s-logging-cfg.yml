@@ -33,7 +33,7 @@ data:
     # all input will come from filebeat, no local logs
     input {
       beats {
-        port => 5000
+        port => 5044
       }
     }
 
@@ -162,18 +162,18 @@ data:
     filebeat.prospectors:
     - input_type: log
       paths:
-        - "/var/log/containers/*.log"
-    exclude_files: ['filebeat.*log','kube.*log']
-    symlinks: true
-    json.message_key: log
-    json.keys_under_root: true
-    json.add_error_key: true
-    multiline.pattern: '^\s'
-    multiline.match: after
-    document_type: kube-logs
+        - "/var/lib/docker/containers/*/*-json.log"
+      #exclude_files: ['filebeat.*log','kube.*log']
+      #symlinks: true
+      #json.message_key: log
+      #json.keys_under_root: true
+      #json.add_error_key: true
+      #multiline.pattern: '^\s'
+      #multiline.match: after
+      document_type: kube-logs
 
     output.logstash:
-      hosts: ["logstash-service:5000"]
+      hosts: ["logstash-service:5044"]
       timeout: 15
-
+    # Available log levels are: critical, error, warning, info, debug
     logging.level: info
