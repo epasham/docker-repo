@@ -1,0 +1,37 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: logging-kibana
+  labels:
+    name: logging-kibana
+  namespace: ns-logging
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: logging-kibana
+    spec:
+      containers:
+       - image: kibana
+         name: kibana
+         ports:
+          - name: kibana
+            containerPort: 5601
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-service
+  labels:
+    name: kibana-service
+  namespace: ns-logging
+spec:
+  type: NodePort
+  ports:
+  - port: 5601
+    targetPort: 5601
+    nodePort: 30601
+  selector:
+    name: kibana
