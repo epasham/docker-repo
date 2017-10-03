@@ -2,7 +2,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: logging-logstash
-  namespace: ns-logging
+  namespace: default
 spec:
   replicas: 1
   template:
@@ -48,7 +48,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: logstash-service
-  namespace: ns-logging
+  namespace: default
 spec:
   selector:
     name: logging-logstash
