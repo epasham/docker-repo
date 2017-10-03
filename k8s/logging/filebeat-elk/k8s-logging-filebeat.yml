@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: logging-filebeat
-  namespace: ns-logging
+  namespace: default
   labels:
     name: logging-filebeat
 spec:
@@ -12,16 +12,9 @@ spec:
         name: logging-filebeat
       name: logging-filebeat
     spec:
-      # filebeat has to run as root to read logs, since the logs
-      # on the host system are all owned by root. this is a little
-      # scary, but at least all the host mounts are read-only, to minimize
-      # possible damage.
-      #securityContext:
-        #runAsUser: 0
       containers:
       - name: filebeat
         image: ekambaram/filebeat:5.3.2
-        #image: komljen/filebeat
         resources:
           requests:
             cpu: 50m
@@ -35,17 +28,30 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /etc/filebeat
+        - name: varlogcontainers
+          mountPath: /var/log/containers
+        - name: varlogpods
+          mountPath: /var/log/pods
         - name: varlibdockercontainers
           mountPath: /var/lib/docker/containers
-          readOnly: true
       terminationGracePeriodSeconds: 30
       volumes:
+      # mount /var/log/containers to get friendly named symlinks to actual logs
+      - name: varlogcontainers
+        hostPath:
+          path: /var/log/containers
+      # mount /var/log/pods as its where pod logs are collected
+      - name: varlogpods
+        hostPath:
+          path: /var/log/pods
+      # mount /var/lib/docker/containers which is where the logs _actually_ are
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+      # mount the configmap with the filebeat config file
       - name: config-volume
         configMap:
           name: logging-cfg
           items:
             - key: filebeat.yml
               path: filebeat.yml
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers
