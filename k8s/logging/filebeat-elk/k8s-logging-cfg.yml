@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: logging-cfg
-  namespace: ns-logging
+  namespace: default
 data:
   elasticsearch.yml: |
     cluster.name: ${cluster_name}
@@ -33,7 +33,7 @@ data:
     # all input will come from filebeat, no local logs
     input {
       beats {
-        port => 5044
+        port => 5000
       }
     }
 
@@ -59,7 +59,7 @@ data:
         # system services have a simpler log filename format that does not include namespace, pod names, or container ids
         grok {
             match => { "source" => "/var/log/hostlogs/%{DATA:container_name}.log" }
-            add_field => { "namespace" => "kube-system" }
+            add_field => { "namespace" => "default" }
             remove_field => ["source"]
         }
       }
@@ -70,46 +70,6 @@ data:
             hosts => [ "elasticsearch-service:9200" ]
         }
     }
-  filebeat1.yml: |
-    filebeat.registry_file: /var/tmp/filebeat/filebeat_registry # store the registry on the host filesystem so it doesn't get lost when pods are stopped
-    filebeat.prospectors:
-    # process all docker container logs, which are stored as json
-    - input_type: log
-      symlinks: true
-      json.message_key: log
-      json.keys_under_root: true
-      json.add_error_key: true
-      multiline.pattern: '^\s'
-      multiline.match: after
-      fields:
-          host: ${FILEBEAT_HOST:${HOSTNAME}}
-          type: kube-logs
-      fields_under_root: true
-      paths:
-        - /var/log/containers/*.log
-    # process system logs, such as kube-apiserver, kube-controller-manager, etc
-    - input_type: log
-      fields:
-          host: ${FILEBEAT_HOST:${HOSTNAME}}
-          type: kube-logs
-      fields_under_root: true
-      paths:
-        - /var/log/hostlogs/kube*.log
-    - input_type: log
-      fields:
-          host: ${FILEBEAT_HOST:${HOSTNAME}}
-          type: kube-logs
-      fields_under_root: true
-      paths:
-        - /var/lib/docker/containers/*/*.log
-      json:
-        keys_under_root: true
-        message_key: log
-      tags:
-        - "json"
-        - "docker"
-    output.logstash:
-      hosts: ["logstash-service:5044"]
   kibana.yml: |
     ## Default Kibana configuration from kibana-docker.
     ## from https://github.com/elastic/kibana-docker/blob/master/build/kibana/config/kibana.yml
@@ -127,27 +87,6 @@ data:
     xpack.ml.enabled: false
     xpack.graph.enabled: false
     xpack.reporting.enabled: false
-  filebeat2.yml: |
-    filebeat.prospectors:
-    - input_type: log
-    tags:
-    - docker
-    paths:
-    - /var/lib/docker/containers/*/*.log
-    json:
-      keys_under_root: true
-      add_error_key: true
-      message_key: log
-    multiline:
-      pattern: '^[[:space:]]+|^Caused by:'
-      negate: false
-      match: after
-
-    output.logstash:
-      hosts: ["logstash-service:5000"]
-
-    # Available log levels are: critical, error, warning, info, debug
-    logging.level: info
   log4j2.properties: |
     status = error
     appender.console.type = Console
@@ -162,18 +101,17 @@ data:
     filebeat.prospectors:
     - input_type: log
       paths:
-        - "/var/lib/docker/containers/*/*-json.log"
-      #exclude_files: ['filebeat.*log','kube.*log']
+        - "/var/lib/docker/containers/*/*.log"
       #symlinks: true
-      #json.message_key: log
-      #json.keys_under_root: true
-      #json.add_error_key: true
-      #multiline.pattern: '^\s'
-      #multiline.match: after
+      json.keys_under_root: true
+      json.add_error_key: true
+      json.message_key: log
+      multiline.pattern: '^\s'
+      multiline.match: after
       document_type: kube-logs
 
     output.logstash:
-      hosts: ["logstash-service:5044"]
+      hosts: ["logstash-service:5000"]
       timeout: 15
     # Available log levels are: critical, error, warning, info, debug
     logging.level: info
