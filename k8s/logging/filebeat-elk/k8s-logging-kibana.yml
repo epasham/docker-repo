@@ -4,7 +4,7 @@ metadata:
   name: logging-kibana
   labels:
     name: logging-kibana
-  namespace: ns-logging
+  namespace: default
 spec:
   replicas: 1
   template:
@@ -32,7 +32,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: kibana-service
-  namespace: ns-logging
+  namespace: default
 spec:
   selector:
     name: logging-kibana
