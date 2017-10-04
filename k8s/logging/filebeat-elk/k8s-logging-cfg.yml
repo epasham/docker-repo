@@ -102,7 +102,7 @@ data:
     - input_type: log
       paths:
         - "/var/lib/docker/containers/*/*.log"
-      #symlinks: true
+      symlinks: true
       json.keys_under_root: true
       json.add_error_key: true
       json.message_key: log
