@@ -53,7 +53,7 @@ data:
 
         # all standard container logs files match a common pattern
         grok {
-            match => { "source" => "/var/lib/docker/containers/%{DATA:container_id}/%{DATA:container_id}-json.log"" }
+            match => { "source" => "/var/lib/docker/containers/%{DATA:container_id}/%{DATA:container_id}-json.log" }
             remove_field => ["source"]
         }
 
