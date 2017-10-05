@@ -64,7 +64,7 @@ data:
             remove_field => ["source"]
         }
         
-        filter { json { source => "message" }
+        filter { json { source => "message" } }
       }
     }
 
