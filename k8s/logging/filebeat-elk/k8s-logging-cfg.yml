@@ -63,6 +63,8 @@ data:
             add_field => { "namespace" => "default" }
             remove_field => ["source"]
         }
+        
+        filter { json { source => "message" }
       }
     }
 
