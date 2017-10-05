@@ -43,7 +43,7 @@ data:
         mutate {
           rename => ["log", "message"]
           add_tag => [ "docker" ]
-      
+              add_field => [ "cluster.name","nec" ]
         }
 
         date {
