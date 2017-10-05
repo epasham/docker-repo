@@ -42,7 +42,8 @@ data:
       if [type] == "kube-logs" {
         mutate {
           rename => ["log", "message"]
-          add_tag => [ "cluster-name", "aec" ]
+          add_tag => [ "docker" ]
+          add_field => [ "cluster.name" => "nec" ]
         }
 
         date {
@@ -52,7 +53,7 @@ data:
 
         # all standard container logs files match a common pattern
         grok {
-            match => { "source" => "/var/log/containers/%{DATA:pod_name}_%{DATA:namespace}_%{GREEDYDATA:container_name}-%{DATA:container_id}.log" }
+            match => { "source" => "/var/lib/docker/containers/%{DATA:pod_name}_%{DATA:namespace}_%{GREEDYDATA:container_name}-%{DATA:container_id}.log" }
             remove_field => ["source"]
         }
 
