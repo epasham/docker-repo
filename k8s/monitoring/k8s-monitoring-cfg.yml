@@ -218,4 +218,9 @@ data:
         - source_labels: [__meta_kubernetes_pod_container_port_number]
           action: keep
           regex: 9\d{3}
----
+  config.yml: |
+    global:
+      smtp_smarthost: 'your_smtp_smarthost:587'
+      smtp_from: 'your_smtp_from'
+      smtp_auth_username: 'your_smtp_user'
+      smtp_auth_password: 'your_smtp_pass'
