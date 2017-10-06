@@ -1,0 +1,77 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: 'true'
+  labels:
+    k8s-app: node-exporter
+  name: node-exporter
+  namespace: ns-monitoring
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: http-metrics
+    port: 9100
+    protocol: TCP
+  selector:
+    k8s-app: node-exporter
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: node-exporter
+  namespace: ns-monitoring
+spec:
+  template:
+    metadata:
+      labels:
+        k8s-app: node-exporter
+      name: node-exporter
+    spec:
+      tolerations:
+      - key: "node.alpha.kubernetes.io/role"
+        operator: "Equal"
+        value: "master"
+        effect: "NoSchedule"
+      hostNetwork: true
+      hostPID: true
+      containers:
+      - image:  prom/prometheus/node-exporter:v0.14.0
+        args:
+        - "-collector.procfs=/host/proc"
+        - "-collector.sysfs=/host/sys"
+        name: node-exporter
+        ports:
+        - containerPort: 9100
+          hostPort: 9100
+          name: scrape
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9100
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
+        resources:
+          requests:
+            memory: 30Mi
+            cpu: 100m
+          limits:
+            memory: 50Mi
+            cpu: 200m
+        volumeMounts:
+        - name: proc
+          readOnly:  true
+          mountPath: /host/proc
+        - name: sys
+          readOnly: true
+          mountPath: /host/sys
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+---
