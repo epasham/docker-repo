@@ -4,6 +4,7 @@ kind: Service
 metadata:
   annotations:
     prometheus.io/scrape: 'true'
+    prometheus.io/port: '9100'
   labels:
     k8s-app: node-exporter
   name: node-exporter
