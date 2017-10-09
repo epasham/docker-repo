@@ -39,7 +39,7 @@ spec:
       hostNetwork: true
       hostPID: true
       containers:
-      - image: prom/node-exporter:v0.15.0
+      - image: prom/node-exporter:v0.14.0
         args:
         - "-collector.procfs=/host/proc"
         - "-collector.sysfs=/host/sys"
