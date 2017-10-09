@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-state-metrics
+  namespace: ns-monitoring
 ---
 apiVersion: v1
 kind: Service
