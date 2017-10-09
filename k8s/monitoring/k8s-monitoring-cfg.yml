@@ -186,7 +186,7 @@ data:
           - source_labels: [__meta_kubernetes_ingress_name]
             target_label: kubernetes_name
       ###
-	  #
+      #
       # Example scrape config for pods
       #
       # The relabeling allows the actual pod scrape endpoint to be configured via the
