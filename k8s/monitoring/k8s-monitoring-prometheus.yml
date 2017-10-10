@@ -54,7 +54,7 @@ spec:
   - name: prometheus
     protocol: TCP
     port: 9090
-    targetPort: 9090
+    targetPort: promui
     nodePort: 31090
 ---
 apiVersion: extensions/v1beta1
@@ -84,7 +84,7 @@ spec:
           - '-config.file=/etc/prometheus/prometheus.yaml'
           - '-alertmanager.url=http://alertmanager-service:9093/'
         ports:
-        - name: webui
+        - name: promui
           containerPort: 9090
         resources:
           requests:
