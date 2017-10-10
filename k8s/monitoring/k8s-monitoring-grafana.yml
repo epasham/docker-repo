@@ -13,6 +13,7 @@ spec:
   - protocol: TCP
     port: 3000
     targetPort: 3000
+    nodePort: 30300
   selector:
     k8s-app: grafana
     component: core
