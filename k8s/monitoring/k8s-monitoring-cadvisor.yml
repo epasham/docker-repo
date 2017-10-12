@@ -15,6 +15,7 @@ spec:
   ports:
   - name: scrape
     port: 8089
+    targetPort: scrape
     protocol: TCP
   selector:
     k8s-app: cadvisor
@@ -63,7 +64,7 @@ spec:
           readOnly: true
         ports:
         - name: scrape
-          containerPort: 8089
+          containerPort: 8080
           protocol: TCP
         securityContext:
           privileged: true
