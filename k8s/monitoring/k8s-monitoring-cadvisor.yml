@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ns-monitoring
+  name: cadvisor
+  annotations:
+    prometheus.io/scrape: 'true'
+  labels:
+    k8s-app: cadvisor
+    component: cadvisor-core
+spec:
+  clusterIP: None
+  type: ClusterIP
+  ports:
+  - name: scrape
+    port: 8089
+    protocol: TCP
+  selector:
+    k8s-app: cadvisor
+    component: cadvisor-core
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: cadvisor
+  namespace: ns-monitoring
+spec:
+  template:
+    metadata:
+      labels:
+         k8s-app: cadvisor
+         component: cadvisor-core
+    spec:
+      tolerations:
+      - operator: "Exists"
+      hostNetwork: true
+      containers:
+      - name: cadvisor
+        image: google/cadvisor
+        resources:
+          requests:
+            cpu: 200m
+            memory: 200M
+          limits:
+            cpu: 800m
+            memory: 800M
+        volumeMounts:
+        - name: cgroup
+          mountPath: /sys/fs/cgroup
+          readOnly: true
+        - name: rootfs
+          mountPath: /rootfs
+          readOnly: true
+        - name: var-run
+          mountPath: /var/run
+          readOnly: false
+        - name: sys
+          mountPath: /sys
+          readOnly: true
+        - name: docker
+          mountPath: /var/lib/docker
+          readOnly: true
+        ports:
+        - name: scrape
+          containerPort: 8089
+          protocol: TCP
+        securityContext:
+          privileged: true
+      hostPID: true
+      volumes:
+        - name: cgroup
+          hostPath:
+           path: /sys/fs/cgroup
+        - name: rootfs
+          hostPath:
+           path: /
+        - name: var-run
+          hostPath:
+           path: /var/run
+        - name: sys
+          hostPath:
+           path: /sys
+        - name: docker
+          hostPath:
+           path: /var/lib/docker
