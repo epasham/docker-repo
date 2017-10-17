@@ -1,0 +1,19 @@
+global:
+  #The smarthost and SMTP server used for mail notifications
+  smtp_smarthost: 'smtp.sendgrid.net:2525'
+  smtp_from: EMAIL_FROM
+  smtp_auth_username: USERNAME
+  smtp_auth_password: EMAIL_PASSWORD
+
+
+route:
+  group_by: ['alertname']
+  # The root route must not have any matchers as it is the entry point for
+  # all alerts. It needs to have a receiver configured so alerts that do not
+  # match any of the sub-routes are sent to someone.
+  receiver: EmailAlert
+
+receivers:
+- name: EmailAlert
+  email_configs:
+    - to: EMAIL_TO
