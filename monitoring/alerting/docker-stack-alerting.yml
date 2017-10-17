@@ -33,6 +33,9 @@ services:
       EMAIL_FROM: 'ekambaram.pasham@gmail.com'
       SENDGRID_USER_NAME: 'ekbot'
       EMAIL_PASSWORD: 'welcome1'
+    configs:
+      - source: alertmanagercfg
+        target: /etc/alertmanager/config.yml
 
   node-exporter:
     image: prom/node-exporter:${NODE_EXPORTER_VERSION:-latest}
@@ -94,3 +97,7 @@ services:
 
 networks:
   prom-net:
+
+configs:
+  alertmanagercfg:
+    file: ./config/config.yml
