@@ -82,7 +82,7 @@ spec:
           - '-storage.local.retention=12h'
           - '-storage.local.memory-chunks=500000'
           - '-config.file=/etc/prometheus/prometheus.yaml'
-          - '-alertmanager.url=http://alertmanager-service:9093/'
+          - '-alertmanager.url=http://alertmanager.ns-monitoring.svc.cluster.local:9093/'
         ports:
         - name: promui
           containerPort: 9090
