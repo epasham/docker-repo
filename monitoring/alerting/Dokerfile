@@ -1,0 +1,11 @@
+FROM prom/alertmanager:v0.5.1
+
+ENV "ALERTMANAGER_BIN_PATH=/bin/alertmanager"
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY config.yml /etc/alertmanager/config.yml
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD        [ "-config.file=/etc/alertmanager/config.yml", \
+             "-storage.path=/alertmanager" ]
