@@ -10,7 +10,7 @@ data:
       IF (100 - (avg by (instance) (irate(node_cpu{name="node-exporter",mode="idle"}[5m])) * 100)) > 75
       FOR 2m
       LABELS {
-        severity="page"
+        severity="critical"
       }
       ANNOTATIONS {
         SUMMARY = "{{$labels.instance}}: High CPU usage detected",
@@ -20,7 +20,7 @@ data:
     ALERT InstanceDown
       IF up == 0
       FOR 1m
-      LABELS { severity = "page" }
+      LABELS { severity = "critical" }
       ANNOTATIONS {
         summary = "Instance {{ $labels.instance }} down",
         description = "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.",
@@ -30,7 +30,7 @@ data:
       IF ((node_filesystem_size{mountpoint="/root-disk"} - node_filesystem_free{mountpoint="/root-disk"} ) / node_filesystem_size{mountpoint="/root-disk"} * 100) > 75
       FOR 2m
       LABELS {
-        severity="page"
+        severity="critical"
       }
       ANNOTATIONS {
         SUMMARY = "{{$labels.instance}}: Low root disk space",
@@ -41,7 +41,7 @@ data:
       IF ((node_filesystem_size{mountpoint="/data-disk"} - node_filesystem_free{mountpoint="/data-disk"} ) / node_filesystem_size{mountpoint="/data-disk"} * 100) > 75
       FOR 2m
       LABELS {
-        severity="page"
+        severity="critical"
       }
       ANNOTATIONS {
         SUMMARY = "{{$labels.instance}}: Low data disk space",
@@ -52,7 +52,7 @@ data:
       IF (((node_memory_SwapTotal-node_memory_SwapFree)/node_memory_SwapTotal)*100) > 75
       FOR 2m
       LABELS {
-        severity="page"
+        severity="critical"
       }
       ANNOTATIONS {
         SUMMARY = "{{$labels.instance}}: Swap usage detected",
@@ -63,7 +63,7 @@ data:
       IF (((node_memory_MemTotal-node_memory_MemFree-node_memory_Cached)/(node_memory_MemTotal)*100)) > 75
       FOR 2m
       LABELS {
-        severity="page"
+        severity="critical"
       }
       ANNOTATIONS {
         SUMMARY = "{{$labels.instance}}: High memory usage detected",
