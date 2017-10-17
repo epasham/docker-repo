@@ -21,6 +21,19 @@ services:
           cpus: '0.10'
           memory: 64M
   
+  alertmanager:
+    image: ekambaram/alertmanager:sgd
+    ports:
+      - 9093:9093
+    networks:
+      - prom-net
+    command: -config.file=/etc/alertmanager/config.yml
+    environment:
+      EMAIL_TO: 'ekambaram.pasham@gmail.com'
+      EMAIL_FROM: 'ekambaram.pasham@gmail.com'
+      SENDGRID_USER_NAME: 'ekbot'
+      EMAIL_PASSWORD: 'welcome1'
+
   node-exporter:
     image: prom/node-exporter:${NODE_EXPORTER_VERSION:-latest}
     networks:
