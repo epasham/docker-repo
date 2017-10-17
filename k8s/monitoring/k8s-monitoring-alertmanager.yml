@@ -42,9 +42,9 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: EMAIL_TO
-          value: "project-alerts@pwc.com"
+          value: "project-alerts@gmail.com"
         - name: EMAIL_FROM
-          value: "project-alerts@pwc.com"
+          value: "project-alerts@gmail.com"
         - name: SENDGRID_USER_NAME
           value: "bot"
         - name: EMAIL_PASSWORD
