@@ -48,7 +48,7 @@ spec:
         - name: SENDGRID_USER_NAME
           value: "bot"
         - name: EMAIL_PASSWORD
-          value: 'welcome1"
+          value: "welcome1"
         volumeMounts:
           - mountPath: /etc/alertmanager
             name: alertmanager
