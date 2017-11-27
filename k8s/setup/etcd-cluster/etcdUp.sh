@@ -3,7 +3,7 @@
 set -x
 set -e
 
-declare -A NODE_MAP=( ["etcd0"]="172.60.0.226" ["etcd1"]="172.60.0.86" ["etcd2"]="172.60.0.106" )
+declare -A NODE_MAP=( ["etcd0"]="192.168.0.20" ["etcd1"]="192.168.0.21" ["etcd2"]="192.168.0.22" )
 
 etcd_download()
 {
