@@ -67,6 +67,34 @@ WantedBy=multi-user.target
 EOF
 }
 
+# ETCD Configuration
+etcd_config()
+{
+    local node_index=$1
+
+cat <<EOF >${PWD}/${node_index}.conf
+ETCD_NAME=${node_index}
+ETCD_DATA_DIR="/var/lib/etcd"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://${NODE_MAP[${node_index}]}:2380"
+ETCD_LISTEN_PEER_URLS="http://${NODE_MAP[${node_index}]}:2380"
+ETCD_LISTEN_CLIENT_URLS="http://${NODE_MAP[${node_index}]}:2379,http://127.0.0.1:2379"
+ETCD_ADVERTISE_CLIENT_URLS="http://${NODE_MAP[${node_index}]}:2379"
+ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster-378"
+ETCD_INITIAL_CLUSTER="etcd0=http://${NODE_MAP['etcd0']}:2380,etcd1=http://${NODE_MAP['etcd1']}:2380,etcd2=http://${NODE_MAP['etcd2']}:2380"
+ETCD_INITIAL_CLUSTER_STATE="new"
+# ETCD_DISCOVERY=""
+# ETCD_DISCOVERY_SRV=""
+# ETCD_DISCOVERY_FALLBACK="proxy"
+# ETCD_DISCOVERY_PROXY=""
+#
+# ETCD_CA_FILE=""
+# ETCD_CERT_FILE=""
+# ETCD_KEY_FILE=""
+# ETCD_PEER_CA_FILE=""
+# ETCD_PEER_CERT_FILE=""
+# ETCD_PEER_KEY_FILE=""
+EOF
+}
 
 # Deploy ETCD
 etcd_deploy()
