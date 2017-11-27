@@ -3,6 +3,12 @@
 set -x
 set -e
 
+root=$(id -u)
+if [ "$root" -ne 0 ] ;then
+    echo "Must run as root"
+    exit 1
+fi
+
 SSH_OPTS="-oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oLogLevel=ERROR -C"
 scp()
 {
@@ -93,3 +99,5 @@ etcd_download
 etcd_service_cfg
 etcd_deploy
 etcd_clean
+
+echo -e "\033[32m etcdctl cluster-health \033[0m"
