@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: splunk-forwarder-daemonset
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      labels:
+         app: splunk-forwarder
+    spec:
+      containers:
+      - name: splunkuf
+        image: splunk/universalforwarder:6.5.2-monitor
+        env:
+        - name: SPLUNK_START_ARGS
+          value: "--accept-license --answer-yes"
+        - name: SPLUNK_USER
+          value: root
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          readOnly: true
+          name: docker-socket
+        - mountPath: /var/lib/docker/containers
+          readOnly: true
+          name: container-logs
+        - mountPath: /opt/splunk/etc/apps/splunkclouduf/default
+          name: splunk-config
+        - mountPath: /var/log/containers
+          readOnly: true
+          name: pod-logs
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+        - name: container-logs
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: pod-logs
+          hostPath:
+            path: /var/log/containers
+        - name: splunk-config
+          configMap:
+            name: splunk-forwarder-config
