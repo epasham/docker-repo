@@ -1,0 +1,97 @@
+apiVersion: v1
+data:
+  cacert.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIIB/DCCAaGgAwIBAgIBADAKBggqhkjOPQQDAjB+MSswKQYDVQQDEyJTcGx1bmsg
+    Q2xvdWQgQ2VydGlmaWNhdGUgQXV0aG9yaXR5MRYwFAYDVQQHEw1TYW4gRnJhbmNp
+    c2NvMRMwEQYDVQQKEwpTcGx1bmsgSW5jMQswCQYDVQQIEwJDQTEVMBMGA1UECxMM
+    U3BsdW5rIENsb3VkMB4XDTE0MTExMDA3MDAxOFoXDTM0MTEwNTA3MDAxOFowfjEr
+    MCkGA1UEAxMiU3BsdW5rIENsb3VkIENlcnRpZmljYXRlIEF1dGhvcml0eTEWMBQG
+    A1UEBxMNU2FuIEZyYW5jaXNjbzETMBEGA1UEChMKU3BsdW5rIEluYzELMAkGA1UE
+    CBMCQ0ExFTATBgNVBAsTDFNwbHVuayBDbG91ZDBZMBMGByqGSM49AgEGCCqGSM49
+    AwEHA0IABPRRy9i3yQcxgMpvCSsI7Qe6YZMimUHOecPZWaGz5jEfB4+p5wT7dF3e
+    QrgjDWshVJZvK6KGO7nDh97GnbVXrTCjEDAOMAwGA1UdEwQFMAMBAf8wCgYIKoZI
+    zj0EAwIDSQAwRgIhALMUgLYPtICN9ci/ZOoXeZxUhn3i4wIo2mPKEWX0IcfpAiEA
+    8Jid6bzwUqAdDZPSOtaEBXV9uRIrNua0Qxl1S55TlWY=
+    -----END CERTIFICATE-----
+  client.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIICGDCCAb+gAwIBAgIEWjcbyDAKBggqhkjOPQQDAjB+MSswKQYDVQQDEyJTcGx1
+    bmsgQ2xvdWQgQ2VydGlmaWNhdGUgQXV0aG9yaXR5MRYwFAYDVQQHEw1TYW4gRnJh
+    bmNpc2NvMRMwEQYDVQQKEwpTcGx1bmsgSW5jMQswCQYDVQQIEwJDQTEVMBMGA1UE
+    CxMMU3BsdW5rIENsb3VkMB4XDTE3MTIxODAxMzcxMloXDTIyMTIxNzAxMzcxMlow
+    gaoxMjAwBgNVBAMMKWlucHV0LXByZC1wLTNndjhsZzV2NHpucy5jbG91ZC5zcGx1
+    bmsuY29tMRYwFAYDVQQHDA1TYW4gRnJhbmNpc2NvMRUwEwYDVQQKDAxTcGx1bmsg
+    Q2xvdWQxCzAJBgNVBAgMAkNBMSMwIQYJKoZIhvcNAQkBFhRjbG91ZC1lbmdAc3Bs
+    dW5rLmNvbTETMBEGA1UECwwKQ2xvdWQgVGVhbTBZMBMGByqGSM49AgEGCCqGSM49
+    AwEHA0IABEqA4qXfBIQOAoe5lq51MxpC1/tee4In2b3Y4+HHL2nepXOhqYuUqAoW
+    WX6jRYy6mZfCyy2uy7+6A25AazLeMe0wCgYIKoZIzj0EAwIDRwAwRAIgb1qfdMFO
+    bdem+HUtaLFzduTy9CnOWFK9lZ942smW9lECIBoP+Ih59CkkALK9YGrot7PMb1Cb
+    l62ZWRRRtcwR6tNd
+    -----END CERTIFICATE-----
+
+    -----BEGIN ENCRYPTED PRIVATE KEY-----
+    MIHeMEkGCSqGSIb3DQEFDTA8MBsGCSqGSIb3DQEFDDAOBAgdqmWuXsFYRwICCAAw
+    HQYJYIZIAWUDBAEqBBCSzeXMDnGyKE2CUcs08AH0BIGQK+IOm68+CWIJOnAxTg2f
+    CZQL7oCpIHt9K/F3Uu3ba2KuhDyDbJKYUMoYRpPVV7cTgodbYZaQa5mA2b+sBdHy
+    Dj5s82G/4VmaZ5kZLhb5+r9QgXmTNGvq3UE9ue3+Mq8gvrcHtTboDzssyU+8pb6A
+    tssErg4hWuH7NvpiTf58Uk7Z3/jCcdb2FYzAesCGVStV
+    -----END ENCRYPTED PRIVATE KEY-----
+  limits.conf: |-
+    # By default a universal or light forwarder is limited to 256kB/s
+    # Either set a different limit in kB/s, or set the value to zero to
+    # have no limit.
+    # Note that a full speed UF can overwhelm a single indexer.
+
+    [thruput]
+    maxKBps = 256
+  outputs.conf: |
+    [tcpout]
+    defaultGroup = splunkcloud
+
+    [tcpout:splunkcloud]
+    compressed = false
+    disabled = false
+    server = input-prd-p-3gv8lg5v4zns.cloud.splunk.com:9997
+    sslCommonNameToCheck = input-prd-p-3gv8lg5v4zns.cloud.splunk.com
+    sslCertPath = $SPLUNK_HOME/etc/apps/splunkclouduf/default/client.pem
+    sslPassword = 91856fbf3b0e9243e37e2e8f3904443c
+    sslRootCAPath = $SPLUNK_HOME/etc/apps/splunkclouduf/default/cacert.pem
+    sslVerifyServerCert = true
+    useACK = true
+    cipherSuite = ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDH-ECDSA-AES256-GCM-SHA384:ECDH-ECDSA-AES128-GCM-SHA256:ECDH-ECDSA-AES128-SHA256
+  server.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIICGTCCAb+gAwIBAgIEWjcbyDAKBggqhkjOPQQDAjB+MSswKQYDVQQDEyJTcGx1
+    bmsgQ2xvdWQgQ2VydGlmaWNhdGUgQXV0aG9yaXR5MRYwFAYDVQQHEw1TYW4gRnJh
+    bmNpc2NvMRMwEQYDVQQKEwpTcGx1bmsgSW5jMQswCQYDVQQIEwJDQTEVMBMGA1UE
+    CxMMU3BsdW5rIENsb3VkMB4XDTE3MTIxODAxMzcxMloXDTIyMTIxNzAxMzcxMlow
+    gaoxMjAwBgNVBAMMKWlucHV0LXByZC1wLTNndjhsZzV2NHpucy5jbG91ZC5zcGx1
+    bmsuY29tMRYwFAYDVQQHDA1TYW4gRnJhbmNpc2NvMRUwEwYDVQQKDAxTcGx1bmsg
+    Q2xvdWQxCzAJBgNVBAgMAkNBMSMwIQYJKoZIhvcNAQkBFhRjbG91ZC1lbmdAc3Bs
+    dW5rLmNvbTETMBEGA1UECwwKQ2xvdWQgVGVhbTBZMBMGByqGSM49AgEGCCqGSM49
+    AwEHA0IABM5yNV6SqHyi1tOUYIGqKKb7RsVRajPDa2N/I86Uv8ab7J/S//1ljbFt
+    r2OeZRUhPh+vjECpAir3pvFsqQ04/7EwCgYIKoZIzj0EAwIDSAAwRQIgNNmuJFqD
+    41lj0a/qIA/Kzot1M7/V95Mf1Q+a1uf5Lm4CIQCgK3bAnqaPLChx1KKeNUn38XYQ
+    qkk/bFMUcwtPHlKbbA==
+    -----END CERTIFICATE-----
+
+    -----BEGIN ENCRYPTED PRIVATE KEY-----
+    MIHeMEkGCSqGSIb3DQEFDTA8MBsGCSqGSIb3DQEFDDAOBAhwPNJ0uisAvgICCAAw
+    HQYJYIZIAWUDBAEqBBBpnNwDXy5CLCnwctWP/PuSBIGQi3RFMWNtbbP8iZb63T4/
+    uNpljLT+DJ/F6dazGMk7w3cALeZ0nFNJXOev2uKiTHYntTsPpeN4V5BKz/6UIRvd
+    NO0XXarOrfTj8qlNOScmNcFE1tGNsTQjhKveN4gYeoGETDEMRhkPH9af+dNAGUkl
+    vi5tk5c7hywnoz3ranZBEKRbBWlI9zMl+4rAFAjTonjX
+    -----END ENCRYPTED PRIVATE KEY-----
+  input.conf: |
+    # watch all files in
+    [monitor:///var/log/containers/*.log]
+    # extract `host` from the first group in the filename
+    host_regex = /var/log/containers/(.*)_.*_.*\.log
+    # set source type to Kubernetes
+    sourcetype = kubernetes
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: splunk-forwarder-config
+  namespace: kube-system
