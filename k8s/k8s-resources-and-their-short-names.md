@@ -13,6 +13,7 @@
 |  hpa                 |  horizontalpodautoscalers    |
 |  ing                 |  ingresses                   |
 |  limits              |  limitranges                 |
+|  netpol              |  networkpolicies             |
 |  ns                  |  namespaces                  |
 |  no                  |  nodes                       |
 |  pvc                 |  persistentvolumeclaims      |
