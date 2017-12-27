@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# gcr.io URL
+# google cloud console url
 #https://console.cloud.google.com/kubernetes/images/list?location=GLOBAL&project=google-containers
 #https://kubernetes.io/docs/admin/kubeadm/
 
