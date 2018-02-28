@@ -1,0 +1,27 @@
+version: '3.2'
+
+services:
+  postgres:
+      image: postgres
+      volumes:
+        - postgres_data:/var/lib/postgresql
+      environment:
+        POSTGRES_DB: keycloak
+        POSTGRES_USER: keycloak
+        POSTGRES_PASSWORD: keycloak
+  keycloak:
+      image: jboss/keycloak:latest
+      environment: 
+        POSTGRES_ADDR: postgres
+        POSTGRES_DATABASE: keycloak
+        POSTGRES_USER: keycloak
+        POSTGRES_PASSWORD: keycloak
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: admin
+      ports:
+        - 8080:8080
+      depends_on:
+        - postgres
+volumes:
+  postgres_data:
+      driver: local
