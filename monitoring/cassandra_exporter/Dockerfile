@@ -1,4 +1,4 @@
-FROM openjdk:10-slim
+FROM centos:7
 MAINTAINER Ekambaram Pasham <ekambaram_pasham@infosys.com>
 
 USER root
@@ -9,10 +9,8 @@ ARG EXPORTER_GROUP=container
 ARG EXPORTER_USER=container
 
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends netcat wget \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+RUN yum install -y nc wget java-1.8.0-openjdk \
+  && yum clean all
 
 RUN mkdir -p /etc/cassandra_exporter /opt/cassandra_exporter
 
