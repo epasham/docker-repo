@@ -45,6 +45,9 @@ RUN echo "${EXPORTER_USER}:${EXPORTER_USER}"|chpasswd
 RUN chown -R ${EXPORTER_USER}:${EXPORTER_GROUP} ${EXPORTER_HOME} \
  && chmod -R 777 ${EXPORTER_HOME}
 
+ADD jmx_cassandra.yaml ${EXPORTER_CONFIG}
+ADD ca.key ca.crt /etc/ssl/certs/
+ADD run.sh /
 
 USER ${EXPORTER_USER}
 
