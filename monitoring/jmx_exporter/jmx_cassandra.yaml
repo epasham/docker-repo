@@ -1,4 +1,4 @@
-hostPort: cassandra:7199
+hostPort: localhost:7199
 lowercaseOutputName: false
 lowercaseOutputLabelNames: false
 whitelistObjectNames: ["org.apache.cassandra.net:*", "org.apache.cassandra.metrics:*", "org.apache.cassandra.db:*", "java.lang:*"]
