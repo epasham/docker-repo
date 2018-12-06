@@ -30,9 +30,9 @@ RUN set -ex \
  && mvn package \
  && find jmx_prometheus_httpserver/ -name *-jar-with-dependencies.jar -exec mv -v '{}' ${EXPORTER_HOME}/jmx_prometheus_httpserver.jar \; \
  && mv example_configs ${EXPORTER_HOME} \
- && cd .. \
+ && cd .. 
               # rm -Rf ./jmx_exporter ./maven /root/.m2;
- && rm -Rf ./maven /root/.m2
+# && rm -Rf ./maven /root/.m2
 
 RUN chmod +x /sbin/dumb-init
 
