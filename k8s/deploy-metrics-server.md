@@ -20,19 +20,50 @@ drwxr-xr-x 2 root root 4096 Feb  5 12:37 docker
 # create metric-server for k8s version 1.8 and above
 # cd 1.8+
 # vi metrics-server-deployment.yaml  
-include the command and parameters as shown below  
-      containers:  
-      - name: metrics-server  
-        image: k8s.gcr.io/metrics-server-amd64:v0.3.1  
-        imagePullPolicy: Always  
-        command:  
-        - /metrics-server  
-        - --metric-resolution=30s  
-        - --kubelet-insecure-tls  
-        - --kubelet-preferred-address-types=InternalIP  
-        volumeMounts:  
-        - name: tmp-dir  
-          mountPath: /tmp  
+vi metrics-server-deployment.yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: metrics-server
+  namespace: kube-system
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: metrics-server
+  namespace: kube-system
+  labels:
+    k8s-app: metrics-server
+spec:
+  selector:
+    matchLabels:
+      k8s-app: metrics-server
+  template:
+    metadata:
+      name: metrics-server
+      labels:
+        k8s-app: metrics-server
+    spec:
+      serviceAccountName: metrics-server
+      volumes:
+      # mount in tmp so we can safely use from-scratch images and/or read-only containers
+      - name: tmp-dir
+        emptyDir: {}
+      containers:
+      - name: metrics-server
+        image: k8s.gcr.io/metrics-server-amd64:v0.3.1
+        imagePullPolicy: Always
+        command:
+        - /metrics-server
+        - --metric-resolution=30s
+        - --kubelet-insecure-tls
+        - --kubelet-preferred-address-types=InternalIP
+        volumeMounts:
+        - name: tmp-dir
+          mountPath: /tmp
+---
+  
 # cd ..
 # kubectl apply -f 1.8+
 clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
