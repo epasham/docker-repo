@@ -1,2 +1,10 @@
 jenkins:
   systemMessage: "The smallest possible configuration for Jenkins Configuration as Code plugin"
+  
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "s3cret"
+  authorizationStrategy: loggedInUsersCanDoAnything
