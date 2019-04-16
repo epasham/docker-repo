@@ -1,5 +1,5 @@
 jenkins:
-  systemMessage: "The smallest possible configuration for Jenkins Configuration as Code plugin"
+  systemMessage: "Jenkins is auto configured from Jenkins Configuration as Code plugin"
   
   securityRealm:
     local:
