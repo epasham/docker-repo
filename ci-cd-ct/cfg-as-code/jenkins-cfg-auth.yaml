@@ -14,6 +14,9 @@ jenkins:
   remotingSecurity:
     enabled: true
   
+  # set slave agent port number
+  slaveAgentPort: 50000
+  
   # Configure agent protocols
   agentProtocols:
     - "Ping"
