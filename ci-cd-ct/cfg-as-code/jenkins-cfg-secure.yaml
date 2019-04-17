@@ -32,6 +32,8 @@ jenkins:
           password: "s3cret"
         - id: ${JENKINS_USER}
           password: ${JENKINS_PASSWORD}
+        - id: "dev"
+          password: ${JENKINS_PASSWORD}
 
   # Configure role-based authorization strategy
   authorizationStrategy:
@@ -44,6 +46,14 @@ jenkins:
               - "Overall/Administer"
             assignments:
               - ${JENKINS_USER}
+          - name: "developer"
+            description: "Developers"
+            permissions:
+              - "Overall/Read"
+              - "Job/Read"
+              - "Job/Create"
+            assignments:
+              - "dev"
           - name: "readonly"
             description: "Read-only users"
             permissions:
