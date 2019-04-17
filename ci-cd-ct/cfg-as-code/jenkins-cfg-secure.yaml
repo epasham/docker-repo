@@ -82,10 +82,3 @@ unclassified:
   # Set jenkins location
   location:
     url: ${JENKINS_URL}
-    
-    
-  # Configure simple theme plugin
-  simple-theme-plugin:
-    elements:
-      - cssUrl:
-          url: "https://tobix.github.io/jenkins-neo2-theme/dist/neo-light.css"
