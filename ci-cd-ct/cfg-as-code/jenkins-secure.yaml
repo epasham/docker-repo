@@ -1,0 +1,91 @@
+jenkins:
+
+  # banner to be displayed on welcome page
+  systemMessage: |
+    Welcome to jenkins configuration-as-code demo by Ekambaram Pasham<ekambaram.pasham@gmail.com>.
+    
+    Jenkins is auto configured from Jenkins Configuration as Code plugin.
+    For more information look at the official repo https://github.com/jenkinsci/configuration-as-code-plugin
+  # Configure crumb issuer
+  crumbIssuer: standard
+  
+  # Enable agent -> master access control
+  remotingSecurity:
+    enabled: true
+  
+  # set slave agent port number
+  slaveAgentPort: 50000
+  
+  # Configure agent protocols
+  agentProtocols:
+    - "Ping"
+    - "JNLP4-connect"
+  
+  # Configure local users
+  # Disable ability to signup
+  # Create administrator account
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "test"
+          password: "s3cret"
+        - id: ${JENKINS_USER}
+          password: ${JENKINS_PASSWORD}
+
+  # Configure role-based authorization strategy
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+          - name: "admin"
+            description: "Jenkins administrators"
+            permissions:
+              - "Overall/Administer"
+            assignments:
+              - ${JENKINS_USER}
+          - name: "readonly"
+            description: "Read-only users"
+            permissions:
+              - "Overall/Read"
+              - "Job/Read"
+            assignments:
+              - "authenticated"
+  
+  
+# Disable CLI over Remoting
+security:
+  remotingCLI:
+    enabled: false
+    
+ 
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: "EKJENKINS"
+              username: "${JENKINS_USER}"
+              password: "${JENKINS_PASSWORD}"
+              description: "Username/Password Credentials for Jenkins"
+          - usernamePassword:
+              scope: SYSTEM
+              id: "DOCKERHUB"
+              username: "{dockerhub_user_name:-ekambaram}"
+              password: "${dockerhub_pass:-password}"
+              description: "Username/Password Credentials for DockerHub"
+ 
+ 
+unclassified:
+  
+  # Set jenkins location
+  location:
+    url: ${JENKINS_URL}
+    
+    
+  # Configure simple theme plugin
+  simple-theme-plugin:
+    elements:
+      - cssUrl:
+          url: "https://tobix.github.io/jenkins-neo2-theme/dist/neo-light.css"
