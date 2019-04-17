@@ -50,8 +50,13 @@ jenkins:
             description: "Developers"
             permissions:
               - "Overall/Read"
-              - "Job/Read"
+              - "Job/Build"
+              - "Job/Cancel"
+              - "Job/Configure"
               - "Job/Create"
+              - "Job/Discover"
+              - "Job/Read"
+      - Job/Workspace:jenkins-users
             assignments:
               - "dev"
           - name: "readonly"
