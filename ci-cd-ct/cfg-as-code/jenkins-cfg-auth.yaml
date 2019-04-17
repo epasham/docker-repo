@@ -8,7 +8,7 @@ jenkins:
     For more information look at the official repo https://github.com/jenkinsci/configuration-as-code-plugin
 
   # Configure crumb issuer
-  #crumbIssuer: standard
+  crumbIssuer: standard
   
   # Enable agent -> master access control
   remotingSecurity:
