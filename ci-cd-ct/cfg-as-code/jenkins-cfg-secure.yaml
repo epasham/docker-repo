@@ -56,7 +56,7 @@ jenkins:
               - "Job/Create"
               - "Job/Discover"
               - "Job/Read"
-      - Job/Workspace:jenkins-users
+              - "Job/Workspace"
             assignments:
               - "dev"
           - name: "readonly"
