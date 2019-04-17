@@ -1,6 +1,19 @@
 jenkins:
   systemMessage: "Jenkins is auto configured from Jenkins Configuration as Code plugin"
+  
+  # Configure local users
+  # Disable ability to signup
+  # Create administrator account
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "s3cret"
+        - id: "user"
+          password: "user123"
 
+  # Configure role-based authorization strategy
   authorizationStrategy:
     roleBased:
       roles:
@@ -17,14 +30,4 @@ jenkins:
               - "Overall/Read"
               - "Job/Read"
             assignments:
-              - "authenticated"
-              
-    securityRealm:
-    local:
-      allowsSignup: false
-      users:
-        - id: "admin"
-          password: "s3cret"
-        - id: "user"
-          password: "user123"
-          
+              - "authenticated"         
