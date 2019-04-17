@@ -7,6 +7,11 @@ jenkins:
     Jenkins is auto configured from Jenkins Configuration as Code plugin.
     For more information look at the official repo https://github.com/jenkinsci/configuration-as-code-plugin
   
+  # Configure agent protocols
+  agentProtocols:
+    - "Ping"
+    - "JNLP4-connect"
+  
   # Configure local users
   # Disable ability to signup
   # Create administrator account
@@ -36,4 +41,10 @@ jenkins:
               - "Overall/Read"
               - "Job/Read"
             assignments:
-              - "authenticated"         
+              - "authenticated"
+  
+  
+# Disable CLI over Remoting
+security:
+  remotingCLI:
+    enabled: false
