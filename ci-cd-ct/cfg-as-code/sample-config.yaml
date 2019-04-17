@@ -1,2 +1,6 @@
 jenkins:
-  systemMessage: "Jenkins is auto configured from Jenkins Configuration as Code plugin"
+  systemMessage: |
+    Welcome to jenkins configuration-as-code demo by Ekambaram Pasham<ekambaram.pasham@gmail.com>.
+    
+    Jenkins is auto configured from Jenkins Configuration as Code plugin.
+    For more information look in the official repo https://github.com/Praqma/praqma-jenkins-casc
