@@ -1,5 +1,11 @@
 jenkins:
-  systemMessage: "Jenkins is auto configured from Jenkins Configuration as Code plugin"
+
+  # banner to be displayed on welcome page
+  systemMessage: |
+    Welcome to jenkins configuration-as-code demo by Ekambaram Pasham<ekambaram.pasham@gmail.com>.
+    
+    Jenkins is auto configured from Jenkins Configuration as Code plugin.
+    For more information look at the official repo https://github.com/jenkinsci/configuration-as-code-plugin
   
   # Configure local users
   # Disable ability to signup
