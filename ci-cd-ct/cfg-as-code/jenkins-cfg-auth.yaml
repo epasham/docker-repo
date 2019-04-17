@@ -6,6 +6,13 @@ jenkins:
     
     Jenkins is auto configured from Jenkins Configuration as Code plugin.
     For more information look at the official repo https://github.com/jenkinsci/configuration-as-code-plugin
+
+  # Configure crumb issuer
+  #crumbIssuer: standard
+  
+  # Enable agent -> master access control
+  remotingSecurity:
+    enabled: true
   
   # Configure agent protocols
   agentProtocols:
