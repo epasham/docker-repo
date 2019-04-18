@@ -32,7 +32,7 @@ jenkins:
       allowsSignup: false
       users:
         - id: "jenkins"
-          password: "${JENKINS_PASSWORD:-s3cret}"
+          password: "${JENKINS_USER_PASSWORD:-s3cret}"
         - id: "admin"
           password: "${JENKINS_ADMIN_PASSWORD:-passw0rd}"
         - id: "cicd"
