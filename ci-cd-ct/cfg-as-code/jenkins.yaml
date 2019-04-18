@@ -85,10 +85,26 @@ security:
 credentials:
   system:
     domainCredentials:
+      - domain:
+          name: "GitHub"
+          description: "Github"
+          specifications:
+            - hostnameSpecification:
+                includes: "github.com, *.github.com"
+        credentials:
+          - string:
+              scope: GLOBAL
+              id: github_access_token
+              secret: ${GITHUB_ACCESS_TOKEN}
+          - usernamePassword:
+              scope: GLOBAL
+              id: github_username_password
+              username: ${GITHUB_USERNAME}
+              password: ${GITHUB_PASSWORD}
       - credentials:
           - usernamePassword:
               scope: GLOBAL
-              id: "ekJENKINS"
+              id: "EKJENKINS"
               username: "admin"
               password: "${JENKINS_PASSWORD}"
               description: "Username/Password Credentials for Jenkins"
@@ -98,6 +114,7 @@ credentials:
               username: "${dockerhub_user_name:-ekambaram}"
               password: "${dockerhub_pass:-password}"
               description: "Username/Password Credentials for DockerHub"
+
  
 
 jobs:
