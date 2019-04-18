@@ -31,14 +31,16 @@ jenkins:
     local:
       allowsSignup: false
       users:
-        - id: "test"
-          password: "s3cret"
+        - id: "jenkins"
+          password: "${JENKINS_PASSWORD:-s3cret}"
         - id: "admin"
-          password: ${JENKINS_PASSWORD}
-        - id: "ekambaram"
-          password: ${JENKINS_PASSWORD}
+          password: "${JENKINS_ADMIN_PASSWORD:-passw0rd}"
         - id: "cicd"
-          password: ${JENKINS_PASSWORD}
+          password: "${CICD_PASSWORD:-passw0rd}"
+        - id: "ekambaram"
+          password: "${EKAMBARAM_PASSWORD:-passw0rd}"
+        - id: "infy"
+          password: "${INFY_PASSWORD:-passw0rd}"
 
   # Configure role-based authorization strategy
   authorizationStrategy:
@@ -50,7 +52,7 @@ jenkins:
             permissions:
               - "Overall/Administer"
             assignments:
-              - ${JENKINS_USER}
+              - "admin"
           - name: "developer"
             description: "Developers"
             permissions:
