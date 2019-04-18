@@ -31,7 +31,7 @@ jenkins:
     local:
       allowsSignup: false
       users:
-        - id: "jenkins"
+        - id: "guest"
           password: "s3cret"
         - id: "admin"
           password: ${JENKINS_PASSWORD}
