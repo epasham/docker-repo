@@ -31,15 +31,13 @@ jenkins:
     local:
       allowsSignup: false
       users:
-        - id: "test"
+        - id: "jenkins"
           password: "s3cret"
         - id: "admin"
           password: ${JENKINS_PASSWORD}
         - id: "ekambaram"
           password: ${JENKINS_PASSWORD}
         - id: "cicd"
-          password: ${JENKINS_PASSWORD}
-        - id: "dev"
           password: ${JENKINS_PASSWORD}
 
   # Configure role-based authorization strategy
@@ -65,7 +63,8 @@ jenkins:
               - "Job/Read"
               - "Job/Workspace"
             assignments:
-              - "ekambaram,dev,cicd"
+              - "cicd"
+              - "ekambaram"
           - name: "readonly"
             description: "Read-only users"
             permissions:
