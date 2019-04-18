@@ -111,5 +111,5 @@ unclassified:
   simple-theme-plugin:
     elements:
       - cssUrl:
-          url: "https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-indigo.css"
+          url: "https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css"
           #url: "https://tobix.github.io/jenkins-neo2-theme/dist/neo-light.css"
