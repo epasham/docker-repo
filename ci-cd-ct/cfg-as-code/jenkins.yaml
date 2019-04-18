@@ -99,7 +99,16 @@ credentials:
               password: "${dockerhub_pass:-password}"
               description: "Username/Password Credentials for DockerHub"
  
- 
+
+jobs:
+# The following jobs are some examples of job dsl configured through JCasC
+  - script: |
+      def myJob = freeStyleJob('SimpleJob')
+      myJob.with {
+          description 'A Simple Job'
+      }
+
+
 unclassified:
   
   # Set jenkins location
