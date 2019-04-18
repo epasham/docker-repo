@@ -96,11 +96,24 @@ credentials:
               scope: GLOBAL
               id: github_access_token
               secret: ${GITHUB_ACCESS_TOKEN}
+              description: Github Access Token
           - usernamePassword:
               scope: GLOBAL
               id: github_username_password
-              username: ${GITHUB_USERNAME}
+              username: "${GITHUB_USERNAME:-epasham}"
               password: ${GITHUB_PASSWORD}
+      - domain:
+          name: "Slack"
+          description: "Slack"
+          specifications:
+            - hostnameSpecification:
+                includes: "slack.com, *.slack.com"
+        credentials:
+          - string:
+              scope: GLOBAL
+              id: slack_access_token
+              secret: ${SLACK_ACCESS_TOKEN}
+              description: Slack Access Token
       - credentials:
           - usernamePassword:
               scope: GLOBAL
