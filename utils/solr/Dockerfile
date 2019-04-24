@@ -9,8 +9,8 @@ ENV CATALINA_HOME /opt/tomcat
 ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin:$CATALINA_HOME/scripts
 
 # Install Tomcat
-ENV TOMCAT_MAJOR 7
-ENV TOMCAT_VERSION 7.0.81
+ENV TOMCAT_MAJOR 9
+ENV TOMCAT_VERSION 9.0.19
 
 RUN wget http://apache.ip-connect.vn.ua/tomcat/tomcat-${TOMCAT_MAJOR}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
  tar -xvf apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
