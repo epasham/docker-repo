@@ -20,7 +20,7 @@ RUN wget http://apache.ip-connect.vn.ua/tomcat/tomcat-${TOMCAT_MAJOR}/v${TOMCAT_
 RUN chmod +x ${CATALINA_HOME}/bin/*sh
 
 # Create Tomcat admin user
-ADD scripts $CATALINA_HOME
+ADD scripts $CATALINA_HOME/scripts
 RUN chmod +x $CATALINA_HOME/scripts/*.sh
 
 # Create tomcat user
