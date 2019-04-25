@@ -74,6 +74,7 @@ jenkins:
               - "Job/Read"
             assignments:
               - "authenticated"
+              - "infy"
   
   
 # Disable CLI over Remoting
