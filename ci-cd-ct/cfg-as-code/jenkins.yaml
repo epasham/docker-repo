@@ -155,20 +155,7 @@ unclassified:
   # Set jenkins location
   location:
     url: ${JENKINS_URL}
-
-        #github
-        githubpluginconfig:
-          configs:
-          - name: "epasham's github"
-            apiUrl: "https://api.github.com"
-            credentialsId: "github-access-token"
-            manageHooks: true
-
-        #slack
-        slackNotifier:  
-          teamDomain: infy
-          room: general
-          tokenCredentialId: slack-access-token 
+ 
 
   # Configure simple theme plugin
   simple-theme-plugin:
