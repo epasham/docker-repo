@@ -1,0 +1,9 @@
+- project:
+    name: 'Build Test'
+    jobs:
+        - 'BUild Test'
+
+- project:
+    name: 'Build and Deploy JJB'
+    jobs:
+        - 'Build and Deploy JJB'
