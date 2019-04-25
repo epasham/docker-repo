@@ -1,0 +1,14 @@
+version: '3'
+services:
+  jenkins:
+    image: ekambaram/cfg-as-code:v3
+    ports:
+    - "8080:8080"
+    environment:
+    - JENKINS_ADMIN_PASSWORD: 'password'
+      JENKINS_URL: 'http://jenkins:8080/jenkins'
+      CASC_JENKINS_CONFIG: 'https://raw.githubusercontent.com/epasham/docker-repo/master/ci-cd-ct/cfg-as-code/jenkins.yaml'
+  jenkins-job-builder:
+    image: ekambaram/jjb
+    links:
+    - jenkins
