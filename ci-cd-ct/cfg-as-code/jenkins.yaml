@@ -159,6 +159,21 @@ jobs:
               shell("echo 'Hello World'")
           }
       }
+  - script: >
+      pipelineJob('pipeline') {
+          definition {
+              cpsScm {
+                  scriptPath 'jenkins/Jenkinsfile'
+                  scm {
+                    git {
+                        remote { url 'https://github.com/jenkins-docs/simple-node-js-react-npm-app.git' }
+                        branch '*/master'
+                        extensions {}
+                    }
+                  }
+              }
+          }
+      }
   - url: https://raw.githubusercontent.com/epasham/docker-repo/master/ci-cd-ct/cfg-as-code/jobs/docker_do_cleanup.groovy
 
 unclassified:
