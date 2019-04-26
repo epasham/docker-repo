@@ -7,14 +7,6 @@ job('docker-do-cleanup') {
         cron('H H * * *')
     }
 
-    parameters {
-        labelParam('Workers') {
-            defaultValue('worker')
-            description('Select nodes')
-            allNodes('allCases', 'IgnoreOfflineNodeEligibility')
-        }
-    }
-
     steps {
         shell('''
 set -exu
