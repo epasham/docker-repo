@@ -154,6 +154,7 @@ jobs:
               shell("echo 'Hello World'")
           }
       }
+  - url: https://raw.githubusercontent.com/epasham/docker-repo/master/ci-cd-ct/cfg-as-code/jobs/docker_do_cleanup.groovy
 
 unclassified:
   
