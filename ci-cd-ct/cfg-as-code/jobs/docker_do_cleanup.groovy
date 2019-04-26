@@ -1,4 +1,4 @@
-job('INFY-CI/docker-do-cleanup') {
+job('docker-do-cleanup') {
     displayName('Docker do clean-up')
     description('Cleans up all left-over docker items to avoid the hard-drive filling up')
 
