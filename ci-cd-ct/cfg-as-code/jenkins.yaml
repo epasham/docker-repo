@@ -41,6 +41,9 @@ jenkins:
           password: "${EKAMBARAM_PASSWORD:-passw0rd}"
         - id: "infy"
           password: "${INFY_PASSWORD:-passw0rd}"
+        - id: "ek_hashed"
+          # password is password
+          password: "#jbcrypt:$2a$10$3bnAsorIxhl9kTYvNHa2hOJQwPzwT4bv9Vs.9KdXkh9ySANjJKm5u"
 
   # Configure role-based authorization strategy
   authorizationStrategy:
@@ -75,6 +78,7 @@ jenkins:
             assignments:
               - "authenticated"
               - "infy"
+              - "ek_hashed"
   
   
 # Disable CLI over Remoting
