@@ -160,13 +160,14 @@ jobs:
           }
       }
   - script: >
-      pipelineJob('pipeline') {
+      pipelineJob('simple-node-js-react-npm-app') {
+          description("simple nodejs Pipeline Job")
           definition {
               cpsScm {
                   scriptPath 'jenkins/Jenkinsfile'
                   scm {
                     git {
-                        remote { url 'https://github.com/jenkins-docs/simple-node-js-react-npm-app.git' }
+                        remote { url 'https://github.com/epasham/simple-node-js-react-npm-app.git' }
                         branch '*/master'
                         extensions {}
                     }
