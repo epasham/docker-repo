@@ -136,6 +136,11 @@ credentials:
  
 
 jobs:
+  - script: >
+      folder('INFY-CI') {
+          displayName('INFY-CI')
+          description('INFY-CI build infrastructure')
+      }
 # The following jobs are some examples of job dsl configured through JCasC
   - script: |
       def myJob = freeStyleJob('SimpleJob')
