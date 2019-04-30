@@ -8,6 +8,7 @@ services:
       context: .
     ports:
       - "8080:8080"
+      - "50000:50000"
     environment:
       - JENKINS_ADMIN_PASSWORD=admin
       - JENKINS_URL=http://jenkins-master:8080/jenkins
