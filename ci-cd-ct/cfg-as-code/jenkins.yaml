@@ -175,6 +175,40 @@ jobs:
               }
           }
       }
+  - script: >
+      organizationFolder(System.getenv('GITHUB_ORGANIZATION') ?: 'epasham') {
+        description("Github Organization folder job configured with JCasC. Set the GITHUB_ORGANIZATION environment variable when launching the container to define the organization name.")
+        displayName(System.getenv('GITHUB_ORGANIZATION') ?: 'epasham')
+        
+        // Projects
+        organizations {
+          github {
+            scanCredentialsId('github_username_password')
+            repoOwner(System.getenv('GITHUB_ORGANIZATION') ?: 'epasham')
+          }
+        }
+        
+        // Project Recognizers
+        projectFactories {
+            workflowMultiBranchProjectFactory {
+                scriptPath 'Jenkinsfile'
+            }
+        }
+        
+        // Orphaned Item Strategy
+        orphanedItemStrategy {
+          discardOldItems {
+            daysToKeep(-1)
+            numToKeep(-1)
+          }
+        }
+        
+        // "Scan Organization Folder Triggers (in minutes)" : 1 day
+        triggers {
+          periodic(1440)
+        }
+      }   
+   
   - url: https://raw.githubusercontent.com/epasham/docker-repo/master/ci-cd-ct/cfg-as-code/jobs/docker_do_cleanup.groovy
 
 unclassified:
