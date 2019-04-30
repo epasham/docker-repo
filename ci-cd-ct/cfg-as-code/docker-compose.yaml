@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  
+  jenkins-master:
+    image: ekambaram/cfg-as-code:v3
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - JENKINS_ADMIN_PASSWORD=admin
+      - JENKINS_URL=http://jenkins-master:8080/jenkins
+
+  maven:
+    image: ekambaram/jenkins-slave-maven:${TAG:-3.27-1}
+    environment:
+      - JENKINS_URL=http://jenkins-master:8080
+      - JENKINS_AGENT_NAME=maven
