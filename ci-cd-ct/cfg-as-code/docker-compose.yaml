@@ -11,14 +11,15 @@ services:
     environment:
       - JENKINS_ADMIN_PASSWORD=admin
       - JENKINS_URL=http://jenkins-master:8080/jenkins
-
+      - CASC_JENKINS_CONFIG=https://raw.githubusercontent.com/epasham/docker-repo/master/ci-cd-ct/cfg-as-code/jenkins.yaml
+      - JAVA_OPTS='-Djenkins.install.runSetupWizard=false'
+      
   maven:
     image: ekambaram/jenkins-slave-maven:${TAG:-3.27-1}
     environment:
       - JENKINS_URL=http://jenkins-master:8080
       - JENKINS_AGENT_NAME=maven
-      
-      
+        
      
   sonar:
     image: sonarqube:7.1
