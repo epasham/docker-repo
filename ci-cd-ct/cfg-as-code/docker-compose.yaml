@@ -17,3 +17,22 @@ services:
     environment:
       - JENKINS_URL=http://jenkins-master:8080
       - JENKINS_AGENT_NAME=maven
+      
+      
+     
+  sonar:
+    image: sonarqube:7.1
+    ports:
+      - "9000:9000"
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/sonar
+      - SONARQUBE_JDBC_USER=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:9.6.5-alpine
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
