@@ -15,7 +15,7 @@ services:
       - JAVA_OPTS='-Djenkins.install.runSetupWizard=false'
       
   maven:
-    image: ekambaram/jenkins-slave-maven:${TAG:-3.27-1}
+    image: ekambaram/jenkins-slave-mvn:${TAG:-3.27-1}
     environment:
       - JENKINS_URL=http://jenkins-master:8080
       - JENKINS_AGENT_NAME=maven
