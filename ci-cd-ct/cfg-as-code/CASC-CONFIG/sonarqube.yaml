@@ -1,0 +1,6 @@
+unclassified:
+  sonarglobalconfiguration:     
+    buildWrapperEnabled: true
+    installations:              
+      - name: sonarqube         
+        serverUrl: http://sonarqube:9000/
