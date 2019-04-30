@@ -182,6 +182,15 @@ unclassified:
   # Set jenkins location
   location:
     url: ${JENKINS_URL}
+    
+  globalLibraries:
+    libraries:
+    - name: "cicd-lib"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              remote: "git@github.com:epasham/jenkins-shared-library.git"
   
   #github
   githubpluginconfig:
