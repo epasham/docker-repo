@@ -1,0 +1,5 @@
+plugins:
+  proxy:
+    name: "${jenkins_proxy_http}"
+    noProxyHost: "${jenkins_no_proxy_list}"
+    port: ${jenkins_proxy_http_port}
