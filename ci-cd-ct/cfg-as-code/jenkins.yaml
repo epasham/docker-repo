@@ -190,7 +190,7 @@ unclassified:
         modernSCM:
           scm:
             git:
-              remote: "git@github.com:epasham/jenkins-shared-library.git"
+              remote: "https://github.com/epasham/jenkins-shared-library.git"
   
   #github
   githubpluginconfig:
