@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-registry-config
+data:
+  config: |
+    version: 0.1
+    log:
+      level: debug
+      fields:
+        service: registry
+    storage:
+      filesystem:
+        rootdirectory: /storage
+      cache:
+        layerinfo: inmemory
+      maintenance:
+        uploadpurging:
+          enabled: false
+      delete:
+        enabled: true
+    http:
+      addr: :5000
+      secret: placeholder
+      debug:
+        addr: localhost:5001
+    auth:
+      token:
+        issuer: harbor-token-issuer
+        realm: https://node2/service/token
+        rootcertbundle: /etc/registry/root.crt
+        service: harbor-registry
+    notifications:
+      endpoints:
+        - name: harbor
+          disabled: false
+          url: http://core/service/notifications
+          timeout: 3000ms
+          threshold: 5
+          backoff: 1s
+
+  cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIE0zCCArugAwIBAgIJAMUAWOGc1wVZMA0GCSqGSIb3DQEBCwUAMAAwHhcNMTkw
+    NTAzMTE1MzU4WhcNMjkwNDMwMTE1MzU4WjAAMIICIjANBgkqhkiG9w0BAQEFAAOC
+    Ag8AMIICCgKCAgEA0lEWzZb7fKftDNWJaZkp3iMZDTvjkwtqds3pQOEAa1PvdyOX
+    ewGjR765XVKJQ6/LgBXDANbsN8SNl/VNhOHbCxnANeEFmVx4ShlaSghEYbPofrnH
+    l6fYDP8CA7wd1pA3liOwH9J9kFCUf4efdPZroVGiEoHLiTmvPkI2jTiBU2Dx90f1
+    o5sS63gWuVB3/OmO0dNc74LgtJamUgRslIL2Zsq8A3YluNnQ+d6iSdqipJNUpdjC
+    JsDsaP721hI+1mnZwOtd8oEvJQLHRn9Glsf0wY2yaHlC4Xz99/JjRDiGox7WpaBP
+    lSrSM98nilMVha9eqfFaN7BQZky8UKDmUGRE4GBEprLeGbLKC6Lc4LjqS9PRP7uM
+    IyTfRWhqncIg2pb8D8sU9ejQg8Jvqqe7DXd8BTGzZv0GLwPX079sNfdP7nNrjgen
+    oL4DqTZe9jVzLGErkY/EH6tjoHxOXC+UYlvCyWRND/IqQJAwM3zCZ6jBCqnsB8kn
+    P/jBZ+OJUJgCtmTxC7dFQVvkb7m6NviDeMJvmLhIMWQe4249Lanw96UEqlWrTyeM
+    IJbHWFl6vh5AihrhWmeFjReYUNnPYRfE/U3d7NJemqBkus195sps9Oq3ePymeI8o
+    Jcuj4ocr8WlH8o6M7ZxbYI4sgUg+1Pzg4biE6jC3GLK5Duq8AVmQHxVfpzMCAwEA
+    AaNQME4wHQYDVR0OBBYEFNgYXuoDauo1ScMKt4CBXsxkhTaYMB8GA1UdIwQYMBaA
+    FNgYXuoDauo1ScMKt4CBXsxkhTaYMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEL
+    BQADggIBABLh+TqWWrKzZJK+tGhG7AVDjSBCQKYCs/mhr0f4ULdu1/idFZ5t5FLn
+    k1jUyrUerVpOee2tk22VL6XneD4cFNKHWtqbM5W8+PO/eB7O3DhbEWvNpiVknX+6
+    XSUkw++KswDic9VaaP73TJrq6KZOvWArOEOBULFAcAPrJU6dPpv4DjpE7EcbqsuV
+    6o4RJs5W1wGTwKF/NIOERTYO3cTUnaXLwMiJVkxZdhrGUqb1aiBU23W9+r94yfKs
+    CXtMrG8lZlN7z8vNs2Ll105DziyBrYRoMc9UA8m77QPOX8HYde19oO7KnJIMw6nK
+    KjEvlj/o/TwnEgnS1A4oWQX2FPb9X00+gZ/9Jq8W0E5U81tAHJJ2v2ypJ8OmileB
+    pgqBAPUATJ/f6UM/wfrlIRwJ98XVuuUtxXSzwEf20OO/uLOQWWq7fIt77maexn8c
+    DT386S9SN3DCfSYylJGBdd8xGUW8SdwWnwY8iusM0OocBY+RS0WyNYvCoppMI9o2
+    QzHnqKDdH8FMIQSi54eSOxmRRKmKeSrCFYwQDO7+N8n1V7UgWNT7gcExqMnziyX/
+    22VPnkLK03ZIU+Hbt+Rqihw9BCTYSaZW+OSwg50eHCXfj1XBNvWeQkqQEZEOkIbJ
+    w8AITCUtl6YJf4QidH8SA8gFtaEcZ+88/DXBCxT26q2x6Y+It1El
+    -----END CERTIFICATE-----
+    
+

@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harbor-core-config
+data:
+  CONFIG_PATH: /etc/core/app.conf
+  LOG_LEVEL: debug
+  CORE_SECRET: "o4FZsfWWakNSFBzf"
+  JOBSERVICE_SECRET: "MmL06pKJVuBieiU9"
+  GODEBUG: netdns=cgo
+  SECRET_KEY: "3dSegK5DtTbyXblw"
+  config: |
+    appname = registry
+    runmode = dev
+    [lang]
+    types = en-US|zh-CN
+    names = en-US|zh-CN
+    [dev]
+    httpport = 80
+    [mail]
+    host = smtp.mydomain.com
+    port = 25
+    username = sample_admin@mydomain.com
+    password = abc
+    from = admin <sample_admin@mydomain.com>
+    ssl = false
+  pkey: |
+    -----BEGIN RSA PRIVATE KEY-----
+    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
+    -----END RSA PRIVATE KEY-----
+    
+
+
