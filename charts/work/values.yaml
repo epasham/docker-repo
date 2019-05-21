@@ -1,0 +1,38 @@
+#This setting enables dev mode to include a local MongoDB install
+devMode:
+  enabled: true
+
+#This setting accepts the EULA for the product
+engine:
+  acceptEULA: "yes"
+
+# Not for Minikube
+#These setting specifies the storage for the services
+# global:
+#   persistence:
+#     storageClass: my-storage-class
+
+# MINIKUBE SPECIFIC SETTINGS (dont not use with other K8 providers)_____________
+
+elastic-infra:
+ nginx-ingress:
+   controller:
+     service:
+       type: NodePort
+       nodePorts:
+         https: 32443
+     extraArgs.report-node-internal-ip-address: ""
+
+hub:
+ ingress:
+   annotations:
+     nginx.ingress.kubernetes.io/auth-signin: https://$host:32443/login?returnto=$request_uri
+
+management-console:
+ ingress:
+   annotations:
+     nginx.ingress.kubernetes.io/auth-signin: https://$host:32443/login?returnto=$request_uri
+
+edge-auth:
+  oidc:
+    redirectUri: https://elastic.example:32443/login/callback    
