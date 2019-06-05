@@ -16,4 +16,4 @@ RUN pip install --pre azure-cli
 COPY scripts /opt/azure-cli/bin 
 RUN chmod +x /opt/azure-cli/bin/*.sh
 
-CMD ["sh", "/opt/azure-cli/acr-cleanup.sh"]
+CMD ["sh", "/opt/azure-cli/bin/acr-cleanup.sh"]
