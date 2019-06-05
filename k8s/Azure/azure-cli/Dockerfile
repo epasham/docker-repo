@@ -2,7 +2,7 @@
 
 FROM centos:centos7
 
-LABEL description="Docker image with python, Azure CLI" \
+LABEL description="Docker image with Azure CLI" \
       maintainer="Ekambaram Pasham <ekambaram.pasham@gmail.com>"
 
 ENV PATH="${PATH}:/opt/azure-cli/bin"
@@ -14,5 +14,6 @@ RUN pip install --pre azure-cli
 
 # Add custom scripts:
 COPY scripts /opt/azure-cli/bin 
+RUN chmod +x /opt/azure-cli/bin/*.sh
 
 CMD ["sh", "/opt/azure-cli/acr-cleanup.sh"]
