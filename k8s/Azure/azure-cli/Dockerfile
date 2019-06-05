@@ -13,7 +13,7 @@ RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
     yum -y install python36u python36u-libs python36u-devel python36u-pip
 
 # Install Azure CLI:
-RUN curl "https://bootstrap.pypa.io/get-pip.py" | python
+RUN yum check-update; curl "https://bootstrap.pypa.io/get-pip.py" | python
 RUN pip install --pre azure-cli
 
 # Add custom scripts:
