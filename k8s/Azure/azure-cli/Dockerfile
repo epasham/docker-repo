@@ -7,10 +7,11 @@ LABEL description="Docker image with python, Azure CLI" \
 
 ENV PATH="${PATH}:/opt/azure-cli/bin"
 
-# Install Python3
-RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
-    yum -y update && \
-    yum -y install python36u python36u-libs python36u-devel python36u-pip
+# Install Python
+RUN yum install -y  python36 python36-tools python36-devel 
+RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"; python3.6 get-pip.py; rm get-pip.py
+RUN pip3 install virtualenv
+RUN pip3 install awscli
 
 # Install Azure CLI:
 # Az is a bit more tricky, install steps are from here:
