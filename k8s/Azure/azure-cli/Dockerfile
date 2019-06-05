@@ -1,6 +1,6 @@
 # docker build -t ekambaram/azure-cli:1.0 
 
-FROM centos:centos7
+FROM centos:7
 
 LABEL description="Docker image with python, Azure CLI" \
       maintainer="Ekambaram Pasham <ekambaram.pasham@gmail.com>"
