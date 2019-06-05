@@ -7,24 +7,15 @@ LABEL description="Docker image with python, Azure CLI" \
 
 ENV PATH="${PATH}:/opt/azure-cli/bin"
 
-# Install Python
-RUN yum install -y  python36 python36-tools python36-devel 
-RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"; python3.6 get-pip.py; rm get-pip.py
-RUN pip3 install virtualenv
-RUN pip3 install awscli
+# Install Python3
+RUN yum -y install https://centos7.iuscommunity.org/ius-release.rpm && \
+    yum -y update && \
+    yum -y install python36u python36u-libs python36u-devel python36u-pip
 
-# Install Azure CLI:
-# Az is a bit more tricky, install steps are from here:
-# https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
-RUN set -x \
-	&& echo "Import the Microsoft repository key" \
-	&& rpm --import https://packages.microsoft.com/keys/microsoft.asc \
-	&& echo "Create local azure-cli repository information" \
-	&& echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo \
-	\
-	&& echo "Update the yum package index and install" \
-	&& yum -y update && \
-	&& yum install -y azure-cli
+# Install Azure CLI
+RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc
+RUN sh -c 'echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'
+RUN yum install -y azure-cli
 
 # Add custom scripts:
 COPY scripts /opt/azure-cli/bin 
