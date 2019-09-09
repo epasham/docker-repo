@@ -27,3 +27,8 @@ kubectl apply -f https://raw.githubusercontent.com/epasham/docker-repo/master/k8
 kubectl apply -f https://raw.githubusercontent.com/epasham/docker-repo/master/k8s/monitoring/kube-prom/09.prom.rules.yaml
 kubectl apply -f https://raw.githubusercontent.com/epasham/docker-repo/master/k8s/monitoring/kube-prom/10.prometheus.yaml
 kubectl apply -f https://raw.githubusercontent.com/epasham/docker-repo/master/k8s/monitoring/kube-prom/11.prom.serviceMonitors.yaml
+
+echo
+echo
+echo "[ INFO ] Prometheus-operator deployment is completed"
+echo
