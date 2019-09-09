@@ -1,0 +1,26 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    monitoring: istio-components
+  name: istio-component-monitor
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 15s
+    port: http-monitoring
+  - interval: 15s
+    port: http-policy-monitoring
+  namespaceSelector:
+    any: true
+  selector:
+    matchExpressions:
+    - key: istio
+      operator: In
+      values:
+      - mixer
+      - pilot
+      - galley
+      - citadel
+---
