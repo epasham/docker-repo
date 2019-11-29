@@ -176,6 +176,15 @@ jobs:
           }
       }
   - script: >
+      multibranchPipelineJob('configuration-as-code') {
+          branchSources {
+              git {
+                     id = 'configuration-as-code'
+                     remote('https://github.com/jenkinsci/configuration-as-code-plugin.git')
+                   }
+           }
+      }
+  - script: >
       organizationFolder(System.getenv('GITHUB_ORGANIZATION') ?: 'epasham') {
         description("Github Organization folder job configured with JCasC. Set the GITHUB_ORGANIZATION environment variable when launching the container to define the organization name.")
         displayName(System.getenv('GITHUB_ORGANIZATION') ?: 'epasham')
