@@ -4,21 +4,14 @@ import os
 from flask import request, jsonify
 from psycopg2 import pool
 
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = int(os.getenv("DB_PORT", 5432))
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_CP_MIN_CONN = int(os.getenv("DB_CP_MIN_CONN", 1))
-DB_CP_MAX_CONN = int(os.getenv("DB_CP_MAX_CONN", 20))
-
-conPool = pool.SimpleConnectionPool(DB_CP_MIN_CONN, DB_CP_MAX_CONN, user=DB_USER,
-                            password=DB_PASSWORD,
-                            host=DB_HOST,
-                            port=DB_PORT,
-                            dbname=DB_NAME)
-
 app = flask.Flask(__name__)
+
+conPool = pool.SimpleConnectionPool(1,20,user = "postgres",
+                            password = "postgres",
+                            host = "postgresdb",
+                            port = "5432",
+                            database = "customerdb")
+
 
 @app.route('/customer', methods=['POST'])
 def addCustomer():
@@ -81,4 +74,3 @@ def updateCustomer():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-

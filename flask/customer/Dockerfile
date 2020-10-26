@@ -9,6 +9,7 @@ ADD requirements.txt /app
 
 # installing dependencies
 RUN pip install -r /app/requirements.txt
+RUN chmod +x /app/wait-for-it.sh
 
 # running app.py code
-CMD ["./app/wait-for-it.sh", "postgresdb:5432", "--", "python", "/app/app.py"]
+CMD ["/app/wait-for-it.sh", "postgresdb:5432", "--", "python", "/app/app.py"]
