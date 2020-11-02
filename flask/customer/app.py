@@ -88,6 +88,7 @@ def deleteCustomer(id):
     with get_cursor() as (connection, cursor):
         try:
             cursor.execute(query, (id,))
+            connection.commit()
         except psycopg2.Error as error:
             print('Database error:', error)
         except Exception as ex:
