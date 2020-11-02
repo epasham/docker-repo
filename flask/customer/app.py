@@ -55,8 +55,8 @@ def addCustomer():
             print('Database error:', error)
         except Exception as ex:
             print('General error:', ex)
-
-     return jsonify(customer)
+            
+    return jsonify(customer)
         
 
 @app.route('/customer/<id>', methods=['GET'])
