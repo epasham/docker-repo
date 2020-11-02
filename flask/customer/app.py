@@ -64,8 +64,7 @@ def addCustomer():
 def getCustomer(id):
     query = "select * from customer where id=%s"
     with get_cursor() as (connection, cursor):
-        try:
-            cursor.execute(insert_sql, records)
+        try:           
             cursor.execute(query, (id,))
             row = cursor.fetchone()
             if row is not None:
@@ -89,12 +88,6 @@ def deleteCustomer(id):
     with get_cursor() as (connection, cursor):
         try:
             cursor.execute(query, (id,))
-            my_id = cursor.fetchone()
-            rowcount = cursor.rowcount
-            if rowcount == 1:
-                connection.commit()
-            else:
-                connection.rollback()
         except psycopg2.Error as error:
             print('Database error:', error)
         except Exception as ex:
