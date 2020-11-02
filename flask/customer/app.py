@@ -84,7 +84,7 @@ def getCustomer(id):
 
 @app.route('/customer/<id>', methods=['DELETE'])
 def deleteCustomer(id):
-    query = "delete from customer where id=%s RETURNING (select_list | *)"
+    query = "delete from customer where id=%s"
     with get_cursor() as (connection, cursor):
         try:
             cursor.execute(query, (id,))
