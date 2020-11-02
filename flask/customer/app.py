@@ -120,7 +120,7 @@ def updateCustomer():
         except Exception as ex:
             print('General error:', ex)
 
-     return jsonify(customer)
+    return jsonify(customer)
 
 
 if __name__ == '__main__':
