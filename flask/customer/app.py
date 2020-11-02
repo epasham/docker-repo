@@ -68,19 +68,20 @@ def getCustomer(id):
             cursor.execute(insert_sql, records)
             cursor.execute(query, (id,))
             row = cursor.fetchone()
+            if row is not None:
+                customer = {
+                    "id": row[0],
+                     "name": row[1],
+                     "address": row[2]
+                }
+                return jsonify(customer)
         except psycopg2.Error as error:
             print('Database error:', error)
         except Exception as ex:
             print('General error:', ex)
         
-        if row is not None:
-            customer = {
-                "id": row[0],
-                "name": row[1],
-                "address": row[2]
-            }
-            return jsonify(customer)
-        return jsonify({})
+
+    return jsonify({})
 
 @app.route('/customer/<id>', methods=['DELETE'])
 def deleteCustomer(id):
