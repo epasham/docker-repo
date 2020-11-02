@@ -4,6 +4,7 @@ import os
 from flask import request, jsonify
 from psycopg2 import pool
 from gevent.pywsgi import WSGIServer
+from contextlib import contextmanager
 
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = int(os.getenv("DB_PORT", 5432))
