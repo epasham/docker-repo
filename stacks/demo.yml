@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  frontend:
+    image: docker.io/ekambaram/demo-web
+    container_name: frontend
+    hostname: frontend
+    ports:
+      - "7000:7000"
+
+  backend:
+    image: docker.io/ekambaram/demo-service
+    container_name: backend
+    hostname: backend
+    ports:
+      - "5000:5000"
