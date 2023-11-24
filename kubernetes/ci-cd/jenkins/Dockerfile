@@ -1,4 +1,4 @@
-FROM jenkinsci/jenkins:alpine
+FROM jenkins/jenkins:lts-alpine
 
 LABEL DESCRIPTION="Jenkins Image" \
       Creator="Ekambaram"
@@ -18,11 +18,11 @@ RUN apk add --no-cache \
     && chmod +x /usr/local/bin/kubectl \
     && addgroup jenkins docker
 
-COPY security.groovy \
+COPY security-basic.groovy \
      executors.groovy \
      /usr/share/jenkins/ref/init.groovy.d/
 
-RUN /usr/local/bin/install-plugins.sh \
+RUN jenkins-plugin-cli --plugins \
     ssh-slaves \
     simple-theme-plugin \
     htmlpublisher \
