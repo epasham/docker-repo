@@ -18,7 +18,7 @@ RUN apk add --no-cache \
     && chmod +x /usr/local/bin/kubectl \
     && addgroup jenkins docker
 
-COPY security-basic.groovy \
+COPY security.groovy \
      executors.groovy \
      /usr/share/jenkins/ref/init.groovy.d/
 
