@@ -18,4 +18,22 @@ RUN apk add --no-cache \
     && chmod +x /usr/local/bin/kubectl \
     && addgroup jenkins docker
 
+COPY security-basic.groovy \
+     executors.groovy \
+     /usr/share/jenkins/ref/init.groovy.d/
+
+RUN /usr/local/bin/install-plugins.sh \
+    ssh-slaves \
+    simple-theme-plugin \
+    htmlpublisher \
+    blueocean \
+    credentials-binding \
+    custom-tools-plugin \
+    docker-workflow \
+    envinject \
+    kubernetes \
+    pipeline-maven \
+    slack \
+    xunit
+
 RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
